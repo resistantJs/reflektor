@@ -8,12 +8,9 @@ public class LaunchProjectile : MonoBehaviour
     public Transform projectileStart;
     public float launchVelocity = 5000.0f;
 
-    private Transform m_launchDirection;
-    
-
     private void Awake()
     {
-        m_launchDirection = projectileStart.GetComponent<Transform>();
+
     }
 
     // Update is called once per frame

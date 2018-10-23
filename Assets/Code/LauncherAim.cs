@@ -12,22 +12,15 @@ public class LauncherAim : MonoBehaviour
     {
         m_launcherTransform = GameObject.Find("Launcher").GetComponent<Transform>();
     }
-
-    // Use this for initialization
-    void Start()
-    {
-
-	}
 	
 	// Update is called once per frame
 	void Update()
     {
-        Vector3 _mouseWorldPos;
-
-        _mouseWorldPos = m_camera.ScreenToWorldPoint(Input.mousePosition);
-        //_mouseWorldPos.y = m_launcherTransform.position.y;
-        Debug.Log("Mouse pos in world space: " + _mouseWorldPos);
-
-        //m_launcherTransform.LookAt(_mouseWorldPos);
-	}
+        Ray _ray = m_camera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit _hit;
+        if (Physics.Raycast(_ray, out _hit))
+        {
+            transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+        }
+    }
 }
