@@ -1,36 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Projectile : MonoBehaviour
 {
     private Rigidbody projectileRB;
+    private Text m_txtRemainBounces;
     private int m_remainingBounces = 5;
 
     private void Awake()
     {
-        
+        m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
     }
-
-    private void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-	}
 
     private void OnCollisionEnter(Collision collision)
     {
-
-        m_remainingBounces--;
-        if (m_remainingBounces <= 0)
+        if (collision.collider.tag == "Collidable")
         {
-            Destroy(gameObject);
+            if (m_remainingBounces <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("Hit collidable object");
+                m_remainingBounces--;
+            }
         }
-        Debug.Log(gameObject + " - Remaining Bounces: " + m_remainingBounces);
+
+        m_txtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
+    }
+
+    public int RemainingBounces
+    {
+        get
+        {
+            return m_remainingBounces;
+        }
     }
 }

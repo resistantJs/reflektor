@@ -6,13 +6,7 @@ public class LauncherAim : MonoBehaviour
 {
     [SerializeField]
     private Camera m_camera;
-    private Transform m_launcherTransform;
 
-    private void Awake()
-    {
-        m_launcherTransform = GameObject.Find("Launcher").GetComponent<Transform>();
-    }
-	
 	// Update is called once per frame
 	void Update()
     {
