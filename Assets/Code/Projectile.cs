@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class Projectile : MonoBehaviour
 {
     private Rigidbody projectileRB;
-    private Text m_txtRemainBounces;
+
     private int m_remainingBounces = 5;
 
     private void Awake()
     {
-        m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
+        GameManager.instance.ActiveProjectile = this;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        m_txtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
+        UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
     }
 
     public int RemainingBounces

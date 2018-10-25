@@ -7,8 +7,6 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
 
-    public GameObject txtScore;
-
     private int m_score = 0;
 
     private void Awake()
@@ -17,21 +15,27 @@ public class ScoreManager : MonoBehaviour
         {
             instance = this;
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
-            return;
         }
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void AddToScore(int _amount)
+    public int Score
     {
-        if (_amount > 0)
+        get
         {
-            m_score += _amount;
+            return Score;
         }
 
-        txtScore.GetComponent<Text>().text = "Score: " + m_score;
-        
+        set
+        {
+            if (value > 0)
+            {
+                m_score = value;
+                UIManager.instance.TxtScore.text = "Score: " + m_score;
+            }
+        }
     }
 }
