@@ -7,14 +7,19 @@ public class LauncherAim : MonoBehaviour
     [SerializeField]
     private Camera m_camera;
 
-	// Update is called once per frame
-	void Update()
+    // Update is called once per frame
+    void Update()
     {
-        Ray _ray = m_camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit _hit;
-        if (Physics.Raycast(_ray, out _hit))
+        if (GameManager.instance.EnablePlay)
         {
-            transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+            Ray _ray = m_camera.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit _hit;
+
+            if (Physics.Raycast(_ray, out _hit))
+            {
+                transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+            }
         }
     }
 }

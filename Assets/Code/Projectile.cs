@@ -14,6 +14,11 @@ public class Projectile : MonoBehaviour
         GameManager.instance.ActiveProjectile = this;
     }
 
+    private void Update()
+    {
+        UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Collidable")
@@ -28,8 +33,6 @@ public class Projectile : MonoBehaviour
                 m_remainingBounces--;
             }
         }
-
-        UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
     }
 
     public int RemainingBounces
