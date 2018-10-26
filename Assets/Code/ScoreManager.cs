@@ -22,6 +22,11 @@ public class ScoreManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Update()
+    {
+        UIManager.instance.TxtScore.text = "Score: " + m_score;
+    }
+
     public int Score
     {
         get
@@ -34,8 +39,12 @@ public class ScoreManager : MonoBehaviour
             if (value > 0)
             {
                 m_score = value;
-                UIManager.instance.TxtScore.text = "Score: " + m_score;
             }
         }
+    }
+
+    public void ResetScore()
+    {
+        m_score = 0;
     }
 }

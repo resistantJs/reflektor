@@ -10,11 +10,6 @@ public class LaunchProjectile : MonoBehaviour
 
     public float launchVelocity = 5000.0f;
 
-    private void Awake()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {

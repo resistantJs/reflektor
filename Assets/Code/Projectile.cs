@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
+        //UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
     }
 
     private void OnCollisionEnter(Collision collision)

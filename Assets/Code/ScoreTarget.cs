@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreTarget : MonoBehaviour
 {
     [SerializeField]
-    private int m_scoreValue = 0;
+    private int m_scoreValue = 100;
 
     private void OnCollisionEnter(Collision collision)
     {

@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour
     private Projectile m_activeProjectile;
 
     private int m_remainProjectiles = 5;
-    private int m_remainLives = 3;
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
     private bool m_targetHit = false;
+    private bool m_reduceLives = true;
+
+    private float m_restartDelay = 5.0f;
 
 	// Use this for initialization
 	void Awake()
@@ -33,18 +35,13 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver)
-        {
-            m_remainLives--;
-        }
-
-		if (m_remainLives <= 0)
+        if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver && m_reduceLives)
         {
             m_gameOver = true;
             m_enablePlay = false;
             UIManager.instance.TxtGameStatus.text = "GAME OVER";
 
-            Invoke("Restart", 3.0f);
+            Invoke("Restart", m_restartDelay);
         }
 
         if (m_targetHit)
@@ -56,12 +53,20 @@ public class GameManager : MonoBehaviour
                 Destroy(m_activeProjectile.gameObject);
             }
 
-            Invoke("Restart", 3.0f);
+            Invoke("Restart", m_restartDelay);
         }
 
         UIManager.instance.TxtRemainProjectiles.text = "Remaining Projectiles: " + m_remainProjectiles;
-        UIManager.instance.TxtRemainLives.text = "Remaining Lives: " + m_remainLives;
 
+
+        if (m_activeProjectile != null)
+        {
+            UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_activeProjectile.RemainingBounces.ToString();
+        }
+        else
+        {
+            UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
+        }
     }
 
     public int RemainingProjectiles
@@ -103,10 +108,12 @@ public class GameManager : MonoBehaviour
 
     void Restart()
     {
-        m_remainProjectiles = 5;
-        m_remainLives = 3;
         m_gameOver = false;
         m_enablePlay = true;
+        m_targetHit = false;
+        m_remainProjectiles = 5;
+        ScoreManager.instance.ResetScore();
+        UIManager.instance.TxtRemainBounces.text = "Remaining Bounces:";
         UIManager.instance.TxtGameStatus.text = "";
     }
 }
