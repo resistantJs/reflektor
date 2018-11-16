@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Rigidbody projectileRB;
-
     private int m_remainingBounces = 5;
 
     [SerializeField]
@@ -57,5 +55,4 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }

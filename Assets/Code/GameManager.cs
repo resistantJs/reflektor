@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private ScoreManager m_scoreManager;
     private GameObject m_activeProjectile;
     private Projectile m_activeProjectileScript;
 
@@ -16,6 +15,9 @@ public class GameManager : MonoBehaviour
     private bool m_gameOver = false;
     private bool m_targetHit = false;
     private bool m_reduceLives = true;
+
+    private int m_score = 0;
+
 
     private float m_restartDelay = 5.0f;
 
@@ -73,6 +75,8 @@ public class GameManager : MonoBehaviour
         {
             UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
         }
+
+        UIManager.instance.TxtScore.text = "Score: " + m_score;
     }
 
     public int RemainingProjectiles
@@ -119,8 +123,29 @@ public class GameManager : MonoBehaviour
         m_enablePlay = true;
         m_targetHit = false;
         m_remainProjectiles = 5;
-        ScoreManager.instance.ResetScore();
+        ResetScore();
         UIManager.instance.TxtRemainBounces.text = "Remaining Bounces:";
         UIManager.instance.TxtGameStatus.text = "";
+    }
+
+    public int Score
+    {
+        get
+        {
+            return Score;
+        }
+
+        set
+        {
+            if (value > 0)
+            {
+                m_score = value;
+            }
+        }
+    }
+
+    public void ResetScore()
+    {
+        m_score = 0;
     }
 }

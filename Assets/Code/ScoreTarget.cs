@@ -12,7 +12,7 @@ public class ScoreTarget : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             Debug.Log("Hit");
-            ScoreManager.instance.Score = m_scoreValue;
+            GameManager.instance.Score = m_scoreValue;
             GameManager.instance.TargetHit();
             Destroy(collision.collider.gameObject);
         }
