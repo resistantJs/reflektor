@@ -112,9 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4659dfa2352ac3c44b8bd9e28a0bc130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_collidableLayers:
-    serializedVersion: 2
-    m_Bits: 512
+  m_minimumLifeTime: 0.15
 --- !u!135 &135644988061257898
 SphereCollider:
   m_ObjectHideFlags: 1

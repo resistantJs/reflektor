@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Projectile : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class Projectile : MonoBehaviour
 
     private int m_remainingBounces = 5;
 
+    [SerializeField]
+    private float m_minimumLifeTime = 0.15f;
     private float m_lifeTime = 0.0f;
 
     private void Awake()
@@ -21,6 +22,7 @@ public class Projectile : MonoBehaviour
     {
         //UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
         m_lifeTime += Time.deltaTime;
+        PrematureDestroy();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -47,12 +49,13 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void DestroyProjectile()
+    private void PrematureDestroy()
     {
-        if (m_lifeTime >= 0.25f)
+        if (InputManager.Instance.DestroyProjectile && m_lifeTime >= m_minimumLifeTime)
         {
             Debug.Log("Destroy command accepted");
             Destroy(gameObject);
         }
     }
+
 }

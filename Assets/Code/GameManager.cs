@@ -41,12 +41,6 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (InputManager.Instance.Fire && m_activeProjectile != null)
-        {
-            Debug.Log("Destory projectile command issued");
-            m_activeProjectileScript.DestroyProjectile();
-        }
-
         if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver && m_reduceLives)
         {
             m_gameOver = true;

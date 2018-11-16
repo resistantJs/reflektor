@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
 
     bool m_fire = false;
     bool m_quit = false;
+    bool m_destroyProjectile = false;
     Vector3 m_mousePos = Vector3.zero;
 
     private void Awake()
@@ -41,6 +42,15 @@ public class InputManager : MonoBehaviour
         else
         {
             Fire = false;
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            DestroyProjectile = true;
+        }
+        else
+        {
+            DestroyProjectile = false;
         }
 
         if (Input.GetButtonDown("Cancel"))
@@ -102,6 +112,19 @@ public class InputManager : MonoBehaviour
         private set
         {
             m_instance = value;
+        }
+    }
+
+    public bool DestroyProjectile
+    {
+        get
+        {
+            return m_destroyProjectile;
+        }
+
+        private set
+        {
+            m_destroyProjectile = value;
         }
     }
 }
