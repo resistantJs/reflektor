@@ -1,0 +1,107 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InputManager : MonoBehaviour
+{
+    private static InputManager m_instance = null;
+
+    bool m_fire = false;
+    bool m_quit = false;
+    Vector3 m_mousePos = Vector3.zero;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        SetInputs();
+	}
+
+    void SetInputs()
+    {
+        m_mousePos = Input.mousePosition;
+        
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Fire = true;
+        }
+        else
+        {
+            Fire = false;
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Quit = true;
+        }
+        else
+        {
+            Quit = false;
+        }
+    }
+
+    public Vector3 MousePos
+    {
+        get
+        {
+            return m_mousePos;
+        }
+
+        private set
+        {
+            m_mousePos = value;
+        }
+    }
+
+    public bool Fire
+    {
+        get
+        {
+            return m_fire;
+        }
+
+        set
+        {
+            m_fire = value;
+        }
+    }
+
+    public bool Quit
+    {
+        get
+        {
+            return m_quit;
+        }
+
+        set
+        {
+            m_quit = value;
+        }
+    }
+
+    public static InputManager Instance
+    {
+        get
+        {
+            return m_instance;
+        }
+
+        private set
+        {
+            m_instance = value;
+        }
+    }
+}

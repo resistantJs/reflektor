@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -38,13 +38,13 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -57,8 +57,8 @@ LightmapSettings:
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
-    m_BakeResolution: 10
-    m_AtlasSize: 512
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -75,7 +75,7 @@ LightmapSettings:
     m_BakeBackend: 1
     m_PVRSampling: 1
     m_PVRDirectSampleCount: 32
-    m_PVRSampleCount: 256
+    m_PVRSampleCount: 500
     m_PVRBounces: 2
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 149141465}
   - component: {fileID: 149141464}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +157,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 149141463}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 664.17255, y: 241.14221, z: -649.8679}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -194,7 +194,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -221,13 +221,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 170076733}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.64172155, y: -0.17829438, z: 0.20986554, w: 0.715794}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 83.47201, y: 7.1280003, z: 39.042004}
 --- !u!1 &212237929
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +319,10 @@ Prefab:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
   m_IsPrefabParent: 0
@@ -365,8 +369,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 55
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -389,7 +393,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 7.1, y: 109.4, z: -0.6}
+  m_LocalPosition: {x: 7.1, y: 205.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -686,6 +690,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &710317817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 710317819}
+  - component: {fileID: 710317818}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &710317818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 710317817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f28f916c5dc4642bb9fb816c10c69f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &710317819
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 710317817}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &712006462
 Prefab:
   m_ObjectHideFlags: 0
@@ -735,6 +779,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -787,6 +835,10 @@ Prefab:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
   m_IsPrefabParent: 0
@@ -823,7 +875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 54433993242579406, guid: 38a90457f2a9b214da113bae1ccedd18,
     type: 2}
-  projectileStart: {fileID: 1147082211}
+  projectileStart: {fileID: 835737951}
   launchVelocity: 5000
 --- !u!114 &835737947
 MonoBehaviour:
@@ -954,6 +1006,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1166,7 +1222,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1109367318}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 664.17255, y: 241.14221, z: -649.8679}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1544,6 +1600,10 @@ Prefab:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
   m_IsPrefabParent: 0
@@ -1680,6 +1740,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1983,6 +2047,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541442804034248, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

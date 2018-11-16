@@ -9,14 +9,18 @@ public class Projectile : MonoBehaviour
 
     private int m_remainingBounces = 5;
 
+    private float m_lifeTime = 0.0f;
+
     private void Awake()
     {
-        GameManager.instance.ActiveProjectile = this;
+        GameManager.instance.ActiveProjectile = gameObject;
+        Debug.Log(gameObject + " Projectile Created");
     }
 
     private void Update()
     {
         //UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
+        m_lifeTime += Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -40,6 +44,15 @@ public class Projectile : MonoBehaviour
         get
         {
             return m_remainingBounces;
+        }
+    }
+
+    public void DestroyProjectile()
+    {
+        if (m_lifeTime >= 0.25f)
+        {
+            Debug.Log("Destroy command accepted");
+            Destroy(gameObject);
         }
     }
 }

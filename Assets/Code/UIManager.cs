@@ -30,7 +30,6 @@ public class UIManager : MonoBehaviour
         m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
         m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
         m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
-        m_txtRemainLives = GameObject.Find("txtRemainLives").GetComponent<Text>();
     }
 	
 	// Update is called once per frame

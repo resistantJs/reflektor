@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     private ScoreManager m_scoreManager;
-    private Projectile m_activeProjectile;
+    private GameObject m_activeProjectile;
+    private Projectile m_activeProjectileScript;
 
     private int m_remainProjectiles = 5;
     private bool m_enablePlay = true;
@@ -35,6 +36,17 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
+        if (InputManager.Instance.Quit)
+        {
+            Application.Quit();
+        }
+
+        if (InputManager.Instance.Fire && m_activeProjectile != null)
+        {
+            Debug.Log("Destory projectile command issued");
+            m_activeProjectileScript.DestroyProjectile();
+        }
+
         if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver && m_reduceLives)
         {
             m_gameOver = true;
@@ -61,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (m_activeProjectile != null)
         {
-            UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_activeProjectile.RemainingBounces.ToString();
+            UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_activeProjectileScript.RemainingBounces.ToString();
         }
         else
         {
@@ -85,11 +97,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Projectile ActiveProjectile
+    public GameObject ActiveProjectile
     {
         set
         {
             m_activeProjectile = value;
+            m_activeProjectileScript = m_activeProjectile.GetComponent<Projectile>();
         }
     }
 

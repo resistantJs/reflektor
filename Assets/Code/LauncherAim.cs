@@ -12,13 +12,14 @@ public class LauncherAim : MonoBehaviour
     {
         if (GameManager.instance.EnablePlay)
         {
-            Ray _ray = m_camera.ScreenPointToRay(Input.mousePosition);
+            Ray _ray = m_camera.ScreenPointToRay(InputManager.Instance.MousePos);
 
             RaycastHit _hit;
 
             if (Physics.Raycast(_ray, out _hit))
             {
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
+                Debug.Log("Mouse X: " + _hit.point.x + " Mouse Z: " + _hit.point.z);
             }
         }
     }
