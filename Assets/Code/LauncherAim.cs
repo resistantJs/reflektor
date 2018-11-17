@@ -19,7 +19,7 @@ public class LauncherAim : MonoBehaviour
             if (Physics.Raycast(_ray, out _hit))
             {
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
-                Debug.Log("Mouse X: " + _hit.point.x + " Mouse Z: " + _hit.point.z);
+                //Debug.Log("Mouse X: " + _hit.point.x + " Mouse Z: " + _hit.point.z);
             }
         }
     }
