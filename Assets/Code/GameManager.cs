@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class GameManager : MonoBehaviour
     private bool m_reduceLives = true;
 
     private int m_score = 0;
-
 
     private float m_restartDelay = 5.0f;
 
