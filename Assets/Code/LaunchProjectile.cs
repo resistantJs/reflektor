@@ -13,13 +13,13 @@ public class LaunchProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (InputManager.Instance.Fire && m_projectileInstance == null && GameManager.instance.RemainingProjectiles > 0 && GameManager.instance.EnablePlay)
+        if (InputManager.Instance.Fire && m_projectileInstance == null && GameManager.Instance.RemainingProjectiles > 0 && GameManager.Instance.EnablePlay)
         {
             m_projectileInstance = Instantiate(projectilePrefab, projectileStart.position, projectileStart.rotation) as Rigidbody;
 
             m_projectileInstance.AddForce(projectileStart.forward * launchVelocity);
 
-            GameManager.instance.UseProjectile();
+            GameManager.Instance.UseProjectile();
         }
     }
 }

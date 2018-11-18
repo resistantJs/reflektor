@@ -1,26 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class EffectsManager : MonoBehaviour {
-
+public class EffectsManager : Manager
+{
     private static EffectsManager m_instance = null;
 
-    [SerializeField]
     private Camera m_mainCamera = null;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += UpdateReferences;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= UpdateReferences;
+    }
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
+        SetInstance();
+        SetReferences();
     }
 
     public static EffectsManager Instance
@@ -38,11 +40,19 @@ public class EffectsManager : MonoBehaviour {
 
     public void ShakeScreen(float _duration, float _magnitude, float _perShakeReduction)
     {
-        StartCoroutine(Shake(_duration, _magnitude, 0.15f));
+        if (m_mainCamera != null)
+        {
+            StartCoroutine(Shake(_duration, _magnitude, _perShakeReduction));
+        }
+        else
+        {
+            Debug.Log("No Main Camera in scene");
+        }
     }
 
     private IEnumerator Shake(float _duration, float _magnitude, float _perShakeReduction)
     {
+        
         Vector3 _originalPos = m_mainCamera.transform.localPosition;
 
         float _elapsedTime = 0.0f;
@@ -78,5 +88,29 @@ public class EffectsManager : MonoBehaviour {
         }
 
         m_mainCamera.transform.localPosition = _originalPos;
+    }
+
+    protected override void UpdateReferences(Scene _scene, LoadSceneMode _mode)
+    {
+        SetReferences();
+    }
+
+    protected override void SetInstance()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    protected override void SetReferences()
+    {
+        m_mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 }

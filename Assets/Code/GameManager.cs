@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Manager
 {
-    public static GameManager instance;
+    private static GameManager m_instance;
 
     private GameObject m_activeProjectile;
     private Projectile m_activeProjectileScript;
@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
     private bool m_targetHit = false;
-    private bool m_reduceLives = true;
 
     private int m_score = 0;
 
@@ -23,19 +22,12 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Awake()
     {
-		if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);        
+        SetInstance();
+        SetReferences();
 	}
-	
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
     {
         if (InputManager.Instance.Quit)
         {
@@ -51,11 +43,11 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver && m_reduceLives)
+            if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver)
             {
                 m_gameOver = true;
                 m_enablePlay = false;
-                UIManager.instance.TxtGameStatus.text = "GAME OVER";
+                UIManager.Instance.TxtGameStatus.text = "GAME OVER";
 
                 Invoke("Restart", m_restartDelay);
             }
@@ -63,7 +55,7 @@ public class GameManager : MonoBehaviour
             if (m_targetHit)
             {
                 m_enablePlay = false;
-                UIManager.instance.TxtGameStatus.text = "YOU WIN";
+                UIManager.Instance.TxtGameStatus.text = "YOU WIN";
                 if (m_activeProjectile != null)
                 {
                     Destroy(m_activeProjectile.gameObject);
@@ -72,19 +64,18 @@ public class GameManager : MonoBehaviour
                 Invoke("Restart", m_restartDelay);
             }
 
-            UIManager.instance.TxtRemainProjectiles.text = "Remaining Projectiles: " + m_remainProjectiles;
-
+            UIManager.Instance.TxtRemainProjectiles.text = "Remaining Projectiles: " + m_remainProjectiles;
 
             if (m_activeProjectile != null)
             {
-                UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_activeProjectileScript.RemainingBounces.ToString();
+                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + m_activeProjectileScript.RemainingBounces.ToString();
             }
             else
             {
-                UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
+                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
             }
 
-            UIManager.instance.TxtScore.text = "Score: " + m_score;
+            UIManager.Instance.TxtScore.text = "Score: " + m_score;
         }
     }
 
@@ -133,8 +124,8 @@ public class GameManager : MonoBehaviour
         m_targetHit = false;
         m_remainProjectiles = 5;
         ResetScore();
-        UIManager.instance.TxtRemainBounces.text = "Remaining Bounces:";
-        UIManager.instance.TxtGameStatus.text = "";
+        UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces:";
+        UIManager.Instance.TxtGameStatus.text = "";
     }
 
     public int Score
@@ -153,8 +144,45 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static GameManager Instance
+    {
+        get
+        {
+            return m_instance;
+        }
+
+        set
+        {
+            m_instance = value;
+        }
+    }
+
     public void ResetScore()
     {
         m_score = 0;
+    }
+
+    protected override void SetInstance()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    protected override void SetReferences()
+    {
+        Debug.Log("No references");
+    }
+
+    protected override void UpdateReferences(Scene _scene, LoadSceneMode _mode)
+    {
+        SetReferences();
     }
 }

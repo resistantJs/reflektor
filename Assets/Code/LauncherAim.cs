@@ -10,7 +10,7 @@ public class LauncherAim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.EnablePlay)
+        if (GameManager.Instance.EnablePlay)
         {
             Ray _ray = m_camera.ScreenPointToRay(InputManager.Instance.MousePos);
 

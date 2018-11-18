@@ -14,4 +14,13 @@ public class MainMenu : MonoBehaviour {
     {
         Application.Quit();
     }
+
+    private void Update()
+    {
+        if (InputManager.Instance.Quit)
+        {
+            Application.Quit();
+        }
+    }
+
 }

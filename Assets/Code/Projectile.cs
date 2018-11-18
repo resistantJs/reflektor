@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.instance.ActiveProjectile = gameObject;
+        GameManager.Instance.ActiveProjectile = gameObject;
         Debug.Log(gameObject + " Projectile Created");
     }
 

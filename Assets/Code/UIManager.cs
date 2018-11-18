@@ -2,41 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Manager
 {
-    public static UIManager instance;
+    private static UIManager m_instance;
 
     private Text m_txtGameStatus;
     private Text m_txtScore;
     private Text m_txtRemainBounces;
     private Text m_txtRemainProjectiles;
-    private Text m_txtRemainLives;
 
     // Use this for initialization
     void Awake()
     {
-        if (instance == null)
+        SetInstance();
+        SetReferences();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += UpdateReferences;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= UpdateReferences;
+    }
+
+    protected override void UpdateReferences(Scene _scene, LoadSceneMode _mode)
+    {
+        SetReferences();
+    }
+
+    protected override void SetInstance()
+    {
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+    }
 
+    protected override void SetReferences()
+    {
         m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
         m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
         m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
         m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
     }
-	
-	// Update is called once per frame
-	void Update()
-    {
-		
-	}
 
     public Text TxtGameStatus
     {
@@ -90,16 +107,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public Text TxtRemainLives
+    public static UIManager Instance
     {
         get
         {
-            return m_txtRemainLives;
+            return m_instance;
         }
 
         set
         {
-            m_txtRemainLives = value;
+            m_instance = value;
         }
     }
 }
