@@ -26,5 +26,4 @@ public class GlowObstacle : MonoBehaviour {
         Debug.Log("Stopping flash effect");
         m_animator.SetBool("hit", false);
     }
-  
 }

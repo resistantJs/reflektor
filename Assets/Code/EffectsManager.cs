@@ -38,11 +38,11 @@ public class EffectsManager : Manager
         }
     }
 
-    public void ShakeScreen(float _duration, float _magnitude, float _perShakeReduction)
+    public void ShakeScreen(float _duration, float _magnitude, float _reductionMultiplier = 1)
     {
         if (m_mainCamera != null)
         {
-            StartCoroutine(Shake(_duration, _magnitude, _perShakeReduction));
+            StartCoroutine(Shake(_duration, _magnitude, _reductionMultiplier));
         }
         else
         {
@@ -50,7 +50,7 @@ public class EffectsManager : Manager
         }
     }
 
-    private IEnumerator Shake(float _duration, float _magnitude, float _perShakeReduction)
+    private IEnumerator Shake(float _duration, float _magnitude, float _reductionMultiplier)
     {
         
         Vector3 _originalPos = m_mainCamera.transform.localPosition;
@@ -59,7 +59,7 @@ public class EffectsManager : Manager
 
         float _shakeMultiplier = 1.0f;
 
-        float _shakeReduction = _magnitude / _duration;
+        float _shakeReduction = _magnitude / _duration * _reductionMultiplier;
 
         while (_elapsedTime < _duration)
         {
