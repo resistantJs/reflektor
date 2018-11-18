@@ -17,15 +17,14 @@ public class GlowObstacle : MonoBehaviour {
         {
             Debug.Log("Glow obstacle collision enter");
             m_animator.SetBool("hit", true);
+            Invoke("StopFlash", 0.05f);
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void StopFlash()
     {
-        if (collision.collider.gameObject.tag == "Projectile")
-        {
-            Debug.Log("Glow obstacle collision exit");
-            m_animator.SetBool("hit", false);
-        }
+        Debug.Log("Stopping flash effect");
+        m_animator.SetBool("hit", false);
     }
+  
 }
