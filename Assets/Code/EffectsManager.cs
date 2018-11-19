@@ -11,17 +11,17 @@ public class EffectsManager : Manager
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += UpdateReferences;
+        SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= UpdateReferences;
+        SceneManager.sceneLoaded -= NewLevelLoaded;
     }
 
     private void Awake()
     {
-        SetInstance();
+        InitManager();
         SetReferences();
     }
 
@@ -57,14 +57,12 @@ public class EffectsManager : Manager
 
         float _elapsedTime = 0.0f;
 
-        float _shakeMultiplier = 1.0f;
-
         float _shakeReduction = _magnitude / _duration * _reductionMultiplier;
 
         while (_elapsedTime < _duration)
         {
-            float _x = Random.Range(-1f, 1f) * _magnitude * _shakeMultiplier;
-            float _z = Random.Range(-1f, 1f) * _magnitude * _shakeMultiplier;
+            float _x = Random.Range(-1f, 1f) * _magnitude;
+            float _z = Random.Range(-1f, 1f) * _magnitude;
 
             m_mainCamera.transform.localPosition = new Vector3(_x, _originalPos.y, _z);
 
@@ -80,22 +78,13 @@ public class EffectsManager : Manager
 
             }
 
-            //_shakeMultiplier -= _perShakeReduction * Time.deltaTime;
-
-            Debug.Log("Magnitude: " + _magnitude);
-
             yield return null;
         }
 
         m_mainCamera.transform.localPosition = _originalPos;
     }
 
-    protected override void UpdateReferences(Scene _scene, LoadSceneMode _mode)
-    {
-        SetReferences();
-    }
-
-    protected override void SetInstance()
+    protected override void InitManager()
     {
         if (Instance == null)
         {
@@ -111,6 +100,11 @@ public class EffectsManager : Manager
 
     protected override void SetReferences()
     {
-        m_mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        m_mainCamera = UnityEngine.GameObject.Find("Main Camera").GetComponent<Camera>();
+    }
+
+    protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
+    {
+        SetReferences();
     }
 }

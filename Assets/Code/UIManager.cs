@@ -16,26 +16,21 @@ public class UIManager : Manager
     // Use this for initialization
     void Awake()
     {
-        SetInstance();
+        InitManager();
         SetReferences();
     }
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += UpdateReferences;
+        SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= UpdateReferences;
+        SceneManager.sceneLoaded -= NewLevelLoaded;
     }
 
-    protected override void UpdateReferences(Scene _scene, LoadSceneMode _mode)
-    {
-        SetReferences();
-    }
-
-    protected override void SetInstance()
+    protected override void InitManager()
     {
         if (Instance == null)
         {
@@ -49,10 +44,15 @@ public class UIManager : Manager
 
     protected override void SetReferences()
     {
-        m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
-        m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
-        m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
-        m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
+        m_txtGameStatus = UnityEngine.GameObject.Find("txtGameStatus").GetComponent<Text>();
+        m_txtScore = UnityEngine.GameObject.Find("txtScore").GetComponent<Text>();
+        m_txtRemainBounces = UnityEngine.GameObject.Find("txtRemainBounces").GetComponent<Text>();
+        m_txtRemainProjectiles = UnityEngine.GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
+    }
+
+    protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
+    {
+        SetReferences();
     }
 
     public Text TxtGameStatus

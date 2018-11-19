@@ -8,21 +8,36 @@ public class GameManager : Manager
     private static GameManager m_instance;
 
     private GameObject m_activeProjectile;
-    private Projectile m_activeProjectileScript;
 
     private int m_remainProjectiles = 5;
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
-    private bool m_targetHit = false;
 
     private int m_score = 0;
 
-    private float m_restartDelay = 5.0f;
+    [SerializeField]
+    private float m_restartDelay = 3.0f;
+    [SerializeField]
+    private float m_nextLevelDelay = 3.0f;
 
-	// Use this for initialization
-	void Awake()
+    private void OnEnable()
     {
-        SetInstance();
+        ScoreTarget.TargetHit += LevelWon;
+        Projectile.ProjectileCreated += SetProjectileReference;
+        SceneManager.sceneLoaded += NewLevelLoaded;
+    }
+
+    private void OnDisable()
+    {
+        ScoreTarget.TargetHit -= LevelWon;
+        Projectile.ProjectileCreated -= SetProjectileReference;
+        SceneManager.sceneLoaded -= NewLevelLoaded;
+    }
+
+    // Use this for initialization
+    void Awake()
+    {
+        InitManager();
         SetReferences();
 	}
 
@@ -52,30 +67,47 @@ public class GameManager : Manager
                 Invoke("Restart", m_restartDelay);
             }
 
-            if (m_targetHit)
-            {
-                m_enablePlay = false;
-                UIManager.Instance.TxtGameStatus.text = "YOU WIN";
-                if (m_activeProjectile != null)
-                {
-                    Destroy(m_activeProjectile.gameObject);
-                }
-
-                Invoke("Restart", m_restartDelay);
-            }
-
-            UIManager.Instance.TxtRemainProjectiles.text = "Remaining Projectiles: " + m_remainProjectiles;
-
             if (m_activeProjectile != null)
-            {
-                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + m_activeProjectileScript.RemainingBounces.ToString();
-            }
-            else
             {
                 UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
             }
+        }
+    }
 
-            UIManager.Instance.TxtScore.text = "Score: " + m_score;
+    private void SetUpGame()
+    {
+        Debug.Log("Setting up game");
+        EnablePlay = true;
+        RemainingProjectiles = 5;
+    }
+
+    private void LevelWon(int _scoreTargetValue)
+    {
+        EnablePlay = false;
+        Score = _scoreTargetValue;
+        UIManager.Instance.TxtScore.text = "Score: " + m_score;
+
+        UIManager.Instance.TxtGameStatus.text = "YOU WIN";
+
+        Invoke("LoadNextLevel", m_nextLevelDelay);
+    }
+
+    private void LoadNextLevel()
+    {
+        Debug.Log("Loading another level");
+        int _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (_nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            Debug.Log("Loading Main Menu");
+
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            Debug.Log("Loading Next Level: " + _nextLevelIndex);
+
+            SceneManager.LoadScene(_nextLevelIndex);
         }
     }
 
@@ -85,6 +117,10 @@ public class GameManager : Manager
         {
             return m_remainProjectiles;
         }
+        private set
+        {
+            m_remainProjectiles = value;
+        }
     }
 
     public void UseProjectile()
@@ -92,16 +128,13 @@ public class GameManager : Manager
         if (m_remainProjectiles > 0)
         {
             m_remainProjectiles--;
+            UIManager.Instance.TxtRemainProjectiles.text = "Remaining Projectiles: " + m_remainProjectiles;
         }
     }
 
-    public GameObject ActiveProjectile
+    private void SetProjectileReference(GameObject _projectile)
     {
-        set
-        {
-            m_activeProjectile = value;
-            m_activeProjectileScript = m_activeProjectile.GetComponent<Projectile>();
-        }
+        m_activeProjectile = _projectile;
     }
 
     public bool EnablePlay
@@ -110,18 +143,17 @@ public class GameManager : Manager
         {
             return m_enablePlay;
         }
-    }
 
-    public void TargetHit()
-    {
-        m_targetHit = true;
+        private set
+        {
+            m_enablePlay = value;
+        }
     }
 
     void Restart()
     {
         m_gameOver = false;
         m_enablePlay = true;
-        m_targetHit = false;
         m_remainProjectiles = 5;
         ResetScore();
         UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces:";
@@ -139,7 +171,7 @@ public class GameManager : Manager
         {
             if (value > 0)
             {
-                m_score = value;
+                m_score += value;
             }
         }
     }
@@ -157,12 +189,12 @@ public class GameManager : Manager
         }
     }
 
-    public void ResetScore()
+    private void ResetScore()
     {
         m_score = 0;
     }
 
-    protected override void SetInstance()
+    protected override void InitManager()
     {
         if (Instance == null)
         {
@@ -181,8 +213,9 @@ public class GameManager : Manager
         Debug.Log("No references");
     }
 
-    protected override void UpdateReferences(Scene _scene, LoadSceneMode _mode)
+    protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
     {
         SetReferences();
+        SetUpGame();
     }
 }

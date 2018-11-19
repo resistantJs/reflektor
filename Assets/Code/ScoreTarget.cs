@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ScoreTarget : MonoBehaviour
 {
+    public delegate void TargetHitEvent(int _scoreTargetValue);
+    public static event TargetHitEvent TargetHit;
+
     [SerializeField]
     private int m_scoreValue = 100;
 
@@ -12,8 +15,9 @@ public class ScoreTarget : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             Debug.Log("Hit");
-            GameManager.Instance.Score = m_scoreValue;
-            GameManager.Instance.TargetHit();
+
+            TargetHit(m_scoreValue);
+
             Destroy(collision.collider.gameObject);
         }
     }

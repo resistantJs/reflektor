@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public delegate void ProjectileCreatedEvent(GameObject _projectile);
+    public static event ProjectileCreatedEvent ProjectileCreated;
+
     private int m_remainingBounces = 5;
 
     [SerializeField]
@@ -12,8 +15,8 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.ActiveProjectile = gameObject;
         Debug.Log(gameObject + " Projectile Created");
+        ProjectileCreated(gameObject);
     }
 
     private void Update()
@@ -35,7 +38,12 @@ public class Projectile : MonoBehaviour
             {
                 Debug.Log("Hit collidable object");
                 m_remainingBounces--;
+                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + RemainingBounces.ToString();
             }
+        }
+        else if (collision.collider.tag == "Target")
+        {
+            Destroy(gameObject);
         }
     }
 
