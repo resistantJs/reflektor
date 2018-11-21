@@ -2053,6 +2053,34 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: GlowObstacleHit
+    clip: {fileID: 8300000, guid: 0a72b26629f88964aa6bc0f178786f47, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: LevelComplete
+    clip: {fileID: 8300000, guid: 814dfe2f75b72e54e8101885a8d1ab3d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 5079b996cdf32cb46bf29f7eaa037e6b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: LauncherFire
+    clip: {fileID: 8300000, guid: 57ca8d3cec51f6f46ab8e42b8f45bf4f, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
 --- !u!4 &1613940811
 Transform:
   m_ObjectHideFlags: 0

@@ -63,6 +63,7 @@ public class GameManager : Manager
                 m_gameOver = true;
                 m_enablePlay = false;
                 UIManager.Instance.TxtGameStatus.text = "GAME OVER";
+                AudioManager.Instance.Play("GameOver");
 
                 Invoke("Restart", m_restartDelay);
             }

@@ -20,6 +20,9 @@ public class LaunchProjectile : MonoBehaviour
             m_projectileInstance.AddForce(projectileStart.forward * launchVelocity);
 
             GameManager.Instance.UseProjectile();
+
+            AudioManager.Instance.Stop("LauncherFire");
+            AudioManager.Instance.Play("LauncherFire");
         }
     }
 }

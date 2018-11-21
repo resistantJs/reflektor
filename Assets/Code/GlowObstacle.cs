@@ -18,6 +18,8 @@ public class GlowObstacle : MonoBehaviour {
             Debug.Log("Glow obstacle collision enter");
             m_animator.SetBool("hit", true);
             Invoke("StopFlash", 0.05f);
+            AudioManager.Instance.Stop("GlowObstacleHit");
+            AudioManager.Instance.Play("GlowObstacleHit");
         }
     }
 
@@ -25,5 +27,6 @@ public class GlowObstacle : MonoBehaviour {
     {
         Debug.Log("Stopping flash effect");
         m_animator.SetBool("hit", false);
+        //AudioManager.Instance.Stop("GlowObstacleHit");
     }
 }

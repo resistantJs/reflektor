@@ -18,6 +18,8 @@ public class ScoreTarget : MonoBehaviour
 
             TargetHit(m_scoreValue);
 
+            AudioManager.Instance.Play("LevelComplete");
+
             Destroy(collision.collider.gameObject);
         }
     }
