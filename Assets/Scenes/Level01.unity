@@ -238,7 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676bdb645247fd245b71c281c25ac798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mainCamera: {fileID: 282840813}
 --- !u!4 &94433542
 Transform:
   m_ObjectHideFlags: 0
@@ -279,6 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee55251547e0d84e9fc8534bf60b499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_restartDelay: 3
+  m_nextLevelDelay: 3
 --- !u!4 &149141465
 Transform:
   m_ObjectHideFlags: 0
@@ -1252,10 +1253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04185d735e938f243816b1231dd32491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_txtGameStatus: {fileID: 1839691455}
-  m_txtScore: {fileID: 1445509650}
-  m_txtRemainBounces: {fileID: 608050637}
-  m_txtRemainProjectiles: {fileID: 1105481973}
 --- !u!4 &1109367320
 Transform:
   m_ObjectHideFlags: 0
@@ -2020,6 +2017,54 @@ Transform:
   - {fileID: 24777937}
   m_Father: {fileID: 671665422}
   m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1613940809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1613940811}
+  - component: {fileID: 1613940810}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1613940810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1613940809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bc0be5eb0452d479aaf7ec3aa638a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sounds:
+  - name: ProjectileBounce
+    clip: {fileID: 8300000, guid: 971072bf6243aa04291cb1a1a4adcf8e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+--- !u!4 &1613940811
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1613940809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 607.9344, y: 269.3292, z: 11.875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1651787988
 GameObject:

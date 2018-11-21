@@ -37,8 +37,13 @@ public class Projectile : MonoBehaviour
             else
             {
                 Debug.Log("Hit collidable object");
+
                 m_remainingBounces--;
+
                 UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + RemainingBounces.ToString();
+
+                AudioManager.Instance.Stop("ProjectileBounce");
+                AudioManager.Instance.Play("ProjectileBounce");
             }
         }
         else if (collision.collider.tag == "Target")
