@@ -13,7 +13,7 @@ public class GameManager : Manager
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
 
-    private int m_score = 0;
+    private bool m_targetHit = false;
 
     [SerializeField]
     private float m_restartDelay = 3.0f;
@@ -41,38 +41,11 @@ public class GameManager : Manager
         SetReferences();
 	}
 
-    // Update is called once per frame
-    void Update()
+    
+
+    public int ActiveLevelBuildIndex()
     {
-        if (InputManager.Instance.Quit)
-        {
-            if (SceneManager.GetActiveScene().buildIndex != 0)
-            {
-                SceneManager.LoadScene(0);
-            }
-            else
-            {
-                Application.Quit();
-            }
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            if (m_activeProjectile == null & m_remainProjectiles <= 0 && !m_gameOver)
-            {
-                m_gameOver = true;
-                m_enablePlay = false;
-                UIManager.Instance.TxtGameStatus.text = "GAME OVER";
-                AudioManager.Instance.Play("GameOver");
-
-                Invoke("Restart", m_restartDelay);
-            }
-
-            if (m_activeProjectile != null)
-            {
-                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
-            }
-        }
+        return SceneManager.GetActiveScene().buildIndex;
     }
 
     private void SetUpGame()
@@ -84,19 +57,26 @@ public class GameManager : Manager
 
     private void LevelWon(int _scoreTargetValue)
     {
-        EnablePlay = false;
-        Score = _scoreTargetValue;
-        UIManager.Instance.TxtScore.text = "Score: " + m_score;
+        m_targetHit = true;
 
+        EnablePlay = false;
+        
         UIManager.Instance.TxtGameStatus.text = "YOU WIN";
 
         Invoke("LoadNextLevel", m_nextLevelDelay);
     }
 
+    
+
+    private void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     private void LoadNextLevel()
     {
         Debug.Log("Loading another level");
-        int _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        int _nextLevelIndex = ActiveLevelBuildIndex() + 1;
 
         if (_nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
         {
@@ -156,25 +136,9 @@ public class GameManager : Manager
         m_gameOver = false;
         m_enablePlay = true;
         m_remainProjectiles = 5;
-        ResetScore();
-        UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces:";
+        ScoreManager.Instance.ResetScore();
+        UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No active projectile";
         UIManager.Instance.TxtGameStatus.text = "";
-    }
-
-    public int Score
-    {
-        get
-        {
-            return Score;
-        }
-
-        set
-        {
-            if (value > 0)
-            {
-                m_score += value;
-            }
-        }
     }
 
     public static GameManager Instance
@@ -188,11 +152,6 @@ public class GameManager : Manager
         {
             m_instance = value;
         }
-    }
-
-    private void ResetScore()
-    {
-        m_score = 0;
     }
 
     protected override void InitManager()
@@ -218,5 +177,44 @@ public class GameManager : Manager
     {
         SetReferences();
         SetUpGame();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (InputManager.Instance.Quit)
+        {
+            if (ActiveLevelBuildIndex() != 0)
+            {
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                Application.Quit();
+            }
+        }
+
+        if (ActiveLevelBuildIndex() != 0 && ActiveLevelBuildIndex() != 4)
+        {
+            if (m_activeProjectile == null && m_remainProjectiles <= 0 && !m_gameOver && !m_targetHit)
+            {
+                m_gameOver = true;
+                m_enablePlay = false;
+                UIManager.Instance.TxtGameStatus.text = "GAME OVER";
+                AudioManager.Instance.Play("GameOver");
+                SceneManager.LoadScene(0);
+
+                Invoke("ReturnToMainMenu", m_restartDelay);
+            }
+
+            if (m_activeProjectile != null)
+            {
+                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
+            }
+        }
+        else
+        {
+            Restart();
+        }
     }
 }

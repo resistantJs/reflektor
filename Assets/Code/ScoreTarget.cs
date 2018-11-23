@@ -8,7 +8,7 @@ public class ScoreTarget : MonoBehaviour
     public static event TargetHitEvent TargetHit;
 
     [SerializeField]
-    private int m_scoreValue = 100;
+    private int m_scoreValue = 1000;
 
     private void OnCollisionEnter(Collision collision)
     {
