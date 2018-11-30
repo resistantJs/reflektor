@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.collider.tag == "Collidable")
         {
-            if (m_remainingBounces <= 0)
+            if (RemainingBounces <= 0)
             {
                 Destroy(gameObject);
             }
@@ -57,6 +57,11 @@ public class Projectile : MonoBehaviour
         get
         {
             return m_remainingBounces;
+        }
+
+        private set
+        {
+            m_remainingBounces = value;
         }
     }
 
