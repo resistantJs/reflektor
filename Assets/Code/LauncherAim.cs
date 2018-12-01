@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class LauncherAim : MonoBehaviour
 {
-    [SerializeField]
     private Camera m_camera;
+
+    private void Awake()
+    {
+        m_camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -19,7 +23,6 @@ public class LauncherAim : MonoBehaviour
             if (Physics.Raycast(_ray, out _hit))
             {
                 transform.LookAt(new Vector3(_hit.point.x, transform.position.y, _hit.point.z));
-                //Debug.Log("Mouse X: " + _hit.point.x + " Mouse Z: " + _hit.point.z);
             }
         }
     }

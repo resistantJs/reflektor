@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 65197463724186672}
   - component: {fileID: 95070208413873102}
   - component: {fileID: 114450357725121896}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GlowObstacle
   m_TagString: Collidable
   m_Icon: {fileID: 0}

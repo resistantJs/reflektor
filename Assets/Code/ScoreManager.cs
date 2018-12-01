@@ -59,7 +59,6 @@ public class ScoreManager : Manager {
         UIManager.Instance.TxtScore.text = "Score: " + m_totalScore;
     }
 
-
     public void ResetScore()
     {
         m_totalScore = 0;
