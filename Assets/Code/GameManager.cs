@@ -66,7 +66,11 @@ public class GameManager : Manager
         UIManager.Instance.TxtGameStatus.text = "YOU WIN";
 
         StartCoroutine(ChangeLevel(GetNextLevelIndex(), m_nextLevelDelay));
+    }
 
+    public void LevelSelectedLevel(int _buildIndex)
+    {
+        SceneManager.LoadScene(_buildIndex);
     }
 
     private int GetNextLevelIndex()
@@ -126,7 +130,7 @@ public class GameManager : Manager
 
     protected override void SetReferences()
     {
-        Debug.Log("No references");
+        Debug.Log(NO_REFERENCES_MESSAGE);
     }
 
     protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
