@@ -7,24 +7,30 @@ public class Projectile : MonoBehaviour
     public delegate void ProjectileCreatedEvent(GameObject _projectile);
     public static event ProjectileCreatedEvent ProjectileCreated;
 
+    public delegate void ProjectDestroyedEvent(GameObject _projectile);
+    public static event ProjectDestroyedEvent ProjectileDestroyed;
+
     private int m_remainingBounces = 5;
+    private float m_lifeTime = 0.0f;
 
     [SerializeField]
     private float m_minimumLifeTime = 0.15f;
-    private float m_lifeTime = 0.0f;
 
     private void Awake()
     {
         Debug.Log(gameObject + " Projectile Created");
+    }
+
+    private void Start()
+    {
         ProjectileCreated(gameObject);
+        UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + RemainingBounces.ToString();
     }
 
     private void Update()
     {
-        //UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
         m_lifeTime += Time.deltaTime;
         PrematureDestroy();
-        Debug.Log("Projectile radius: " + GetComponent<SphereCollider>().radius);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -33,6 +39,7 @@ public class Projectile : MonoBehaviour
         {
             if (RemainingBounces <= 0)
             {
+                ProjectileDestroyed(gameObject);
                 Destroy(gameObject);
             }
             else
@@ -49,6 +56,7 @@ public class Projectile : MonoBehaviour
         }
         else if (collision.collider.tag == "Target")
         {
+            ProjectileDestroyed(gameObject);
             Destroy(gameObject);
         }
     }
@@ -71,6 +79,7 @@ public class Projectile : MonoBehaviour
         if (InputManager.Instance.DestroyProjectile && m_lifeTime >= m_minimumLifeTime)
         {
             Debug.Log("Destroy command accepted");
+            ProjectileDestroyed(gameObject);
             Destroy(gameObject);
         }
     }

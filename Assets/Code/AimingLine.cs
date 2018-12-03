@@ -20,11 +20,9 @@ public class AimingLine : MonoBehaviour {
     private void Awake()
     {
         m_lineRenderer = GetComponent<LineRenderer>();
-        m_projectileRadius = m_projectile.GetComponent<SphereCollider>().radius * m_projectile.GetComponent<Transform>().localScale.z;
-    }
 
-    private void Start()
-    {
+        m_projectileRadius = m_projectile.GetComponent<SphereCollider>().radius * m_projectile.GetComponent<Transform>().localScale.z;
+
         m_lineRenderer.startWidth = m_projectileRadius * 2 * m_lineRenderer.gameObject.GetComponent<Transform>().localScale.z;
         m_lineRenderer.endWidth = m_projectileRadius * 2 * m_lineRenderer.gameObject.GetComponent<Transform>().localScale.z;
     }
@@ -33,7 +31,6 @@ public class AimingLine : MonoBehaviour {
     void Update()
     {
         DrawAimLine();
-        Debug.Log("Sphere collider radius: " + m_projectileRadius);
 	}
 
     void DrawAimLine()

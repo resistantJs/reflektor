@@ -23,6 +23,7 @@ public class GameManager : Manager
     {
         ScoreTarget.TargetHit += LevelWon;
         Projectile.ProjectileCreated += SetProjectileReference;
+        Projectile.ProjectileDestroyed += ClearProjectileReference;
         SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
@@ -30,6 +31,7 @@ public class GameManager : Manager
     {
         ScoreTarget.TargetHit -= LevelWon;
         Projectile.ProjectileCreated -= SetProjectileReference;
+        Projectile.ProjectileDestroyed -= ClearProjectileReference;
         SceneManager.sceneLoaded -= NewLevelLoaded;
     }
 
@@ -92,7 +94,20 @@ public class GameManager : Manager
 
     private void SetProjectileReference(GameObject _projectile)
     {
-        ActiveProjectile = _projectile;
+        if (_projectile != null)
+        {
+            ActiveProjectile = _projectile;
+        }
+    }
+
+    private void ClearProjectileReference(GameObject _projectile)
+    {
+        if (_projectile != null && ActiveProjectile.Equals(_projectile))
+        {
+            ActiveProjectile = null;
+            UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No active projectile";
+            CheckGameOver();
+        }
     }
 
     protected override void InitManager()
@@ -132,7 +147,7 @@ public class GameManager : Manager
         return false;
     }
 
-    private bool IsGameOver()
+    private bool CheckGameOver()
     {
         if (!OnMenu())
         {
@@ -148,6 +163,16 @@ public class GameManager : Manager
                         if (!GameOver)
                         {
                             Debug.Log("Game is not already over");
+
+                            Debug.Log("Game Over");
+
+                            GameOver = true;
+                            EnablePlay = false;
+
+                            UIManager.Instance.TxtGameStatus.text = "GAME OVER";
+                            AudioManager.Instance.Play("GameOver");
+
+                            StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
 
                             return true;
                         }
@@ -181,25 +206,6 @@ public class GameManager : Manager
                 Application.Quit();
             }
         }
-
-        if (IsGameOver())
-        {
-            Debug.Log("Game Over");
-
-            GameOver = true;
-            EnablePlay = false;
-
-            UIManager.Instance.TxtGameStatus.text = "GAME OVER";
-            AudioManager.Instance.Play("GameOver");
-
-            StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
-        }
-
-        if (ActiveProjectile != null)
-        {
-            UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No Active Projectile";
-        }
-
     }
 
     #region Accessors
