@@ -73,7 +73,7 @@ Transform:
   m_GameObject: {fileID: 1676616870043922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4900991069937446}
   m_RootOrder: 0
@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f3888682c8612498a7c1d9f440a121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_projectile: {fileID: 1092323116488338, guid: 38a90457f2a9b214da113bae1ccedd18,
+    type: 2}
   m_layers:
     serializedVersion: 2
     m_Bits: 512
@@ -229,7 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17859399e680ff4fadc7aa1ae8f9f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_camera: {fileID: 0}
 --- !u!114 &114936750809417186
 MonoBehaviour:
   m_ObjectHideFlags: 1

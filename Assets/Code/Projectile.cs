@@ -24,6 +24,7 @@ public class Projectile : MonoBehaviour
         //UIManager.instance.TxtRemainBounces.text = "Remaining Bounces: " + m_remainingBounces;
         m_lifeTime += Time.deltaTime;
         PrematureDestroy();
+        Debug.Log("Projectile radius: " + GetComponent<SphereCollider>().radius);
     }
 
     private void OnCollisionEnter(Collision collision)
