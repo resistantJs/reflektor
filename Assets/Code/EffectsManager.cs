@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,7 +51,6 @@ public class EffectsManager : Manager
 
     private IEnumerator Shake(float _duration, float _magnitude, float _reductionMultiplier)
     {
-        
         Vector3 _originalPos = m_mainCamera.transform.localPosition;
 
         float _elapsedTime = 0.0f;

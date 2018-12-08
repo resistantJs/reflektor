@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ScoreTarget : MonoBehaviour
 {
+    [SerializeField]
+    private readonly int m_scoreValue = 100;
+
     public delegate void TargetHitEvent(int _scoreTargetValue);
     public static event TargetHitEvent TargetHit;
-
-    [SerializeField]
-    private int m_scoreValue = 1000;
 
     private void OnCollisionEnter(Collision collision)
     {

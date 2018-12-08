@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GlowObstacle : MonoBehaviour {
-
+public class GlowObstacle : MonoBehaviour
+{
     private Animator m_animator = null;
 
     private void Awake()

@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Wall : MonoBehaviour {
-
+public class Wall : MonoBehaviour
+{
     [SerializeField]
-    private float m_impactShakeDuration = 0.5f;
+    private readonly float m_impactShakeDuration = 0.5f;
     [SerializeField]
-    private float m_impactShakeMagnitude = 1f;
+    private readonly float m_impactShakeMagnitude = 1f;
     [SerializeField]
-    private float m_impactShakePerShakeReduction = 1f;
+    private readonly float m_impactShakePerShakeReduction = 1f;
 
     private void OnCollisionEnter(Collision collision)
     {

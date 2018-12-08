@@ -1,15 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
     private static InputManager m_instance = null;
-
-    bool m_fire = false;
-    bool m_quit = false;
-    bool m_destroyProjectile = false;
-    Vector3 m_mousePos = Vector3.zero;
+    private bool m_fire = false;
+    private bool m_quit = false;
+    private bool m_destroyProjectile = false;
+    private Vector3 m_mousePos = Vector3.zero;
 
     private void Awake()
     {
@@ -26,15 +23,15 @@ public class InputManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update ()
+    private void Update()
     {
         SetInputs();
-	}
+    }
 
-    void SetInputs()
+    private void SetInputs()
     {
         m_mousePos = Input.mousePosition;
-        
+
         if (Input.GetButtonDown("Fire1"))
         {
             Fire = true;

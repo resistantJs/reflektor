@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : Manager
 {
@@ -14,7 +12,7 @@ public class UIManager : Manager
     private Text m_txtRemainProjectiles;
 
     // Use this for initialization
-    void Awake()
+    private void Awake()
     {
         InitManager();
         SetReferences();
@@ -40,6 +38,8 @@ public class UIManager : Manager
         {
             Destroy(gameObject);
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     protected override void SetReferences()
@@ -114,7 +114,7 @@ public class UIManager : Manager
             return m_instance;
         }
 
-        set
+        private set
         {
             m_instance = value;
         }

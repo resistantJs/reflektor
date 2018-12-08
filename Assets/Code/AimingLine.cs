@@ -1,21 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class AimingLine : MonoBehaviour {
-
+public class AimingLine : MonoBehaviour
+{
     private LineRenderer m_lineRenderer;
     private float m_projectileRadius = 0.0f;
 
     [SerializeField]
     private GameObject m_projectile;
+
     [SerializeField]
     private LayerMask m_layers;
+
     [SerializeField]
-    private float m_maxDistance = 1000f;
+    private readonly float m_maxDistance = 1000f;
+
     [SerializeField]
-    private float m_lengthMultiplier = 0.25f;
+    private readonly float m_lengthMultiplier = 0.25f;
 
     private void Awake()
     {
@@ -28,12 +29,12 @@ public class AimingLine : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         DrawAimLine();
-	}
+    }
 
-    void DrawAimLine()
+    private void DrawAimLine()
     {
         RaycastHit _hit;
 

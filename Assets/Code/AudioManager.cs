@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 /*
@@ -12,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class AudioManager : Manager
 {
     [System.Serializable]
-    class Sound
+    private class Sound
     {
         public string name = null;
 
@@ -80,6 +78,7 @@ public class AudioManager : Manager
                 {
                     m_sounds[i].source.Play();
                     Debug.Log("Playing audio: " + _name);
+
                     m_currentlyPlayingSounds.Add(_name);
                     Debug.Log("Audio added: " + _name);
                 }
@@ -105,6 +104,7 @@ public class AudioManager : Manager
                 {
                     m_sounds[i].source.Stop();
                     Debug.Log("Audio Stopped: " + _name);
+
                     if (m_currentlyPlayingSounds.Contains(_name))
                     {
                         m_currentlyPlayingSounds.Remove(_name);
@@ -157,6 +157,7 @@ public class AudioManager : Manager
         else
         {
             Destroy(gameObject);
+
             return;
         }
 

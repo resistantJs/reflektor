@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScoreManager : Manager {
-
+public class ScoreManager : Manager
+{
     private static ScoreManager m_instance;
 
     private int m_totalScore = 0;
-
 
     private void OnEnable()
     {
@@ -26,6 +23,11 @@ public class ScoreManager : Manager {
         SetReferences();
     }
 
+    private void Update()
+    {
+        Debug.Log("Current score: " + m_totalScore);
+    }
+
     public int TotalScore
     {
         get
@@ -37,7 +39,7 @@ public class ScoreManager : Manager {
         {
             m_totalScore = value;
         }
-    } 
+    }
 
     public static ScoreManager Instance
     {
@@ -76,6 +78,7 @@ public class ScoreManager : Manager {
         {
             Destroy(gameObject);
         }
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -88,6 +91,4 @@ public class ScoreManager : Manager {
     {
         Debug.Log("No references");
     }
-
-  
 }

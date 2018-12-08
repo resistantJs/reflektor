@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LauncherAim : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class LauncherAim : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (GameManager.Instance.EnablePlay)
         {

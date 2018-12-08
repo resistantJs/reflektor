@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,7 +14,7 @@ public class GameManager : Manager
     private bool m_targetHit = false;
 
     [SerializeField]
-    private float m_nextLevelDelay = 3.0f;
+    private readonly float m_nextLevelDelay = 3.0f;
 
     #endregion
 
@@ -36,11 +35,11 @@ public class GameManager : Manager
     }
 
     // Use this for initialization
-    void Awake()
+    private void Awake()
     {
         InitManager();
         SetReferences();
-	}
+    }
 
     public int ActiveLevelBuildIndex()
     {
@@ -50,9 +49,11 @@ public class GameManager : Manager
     private void SetUpGame()
     {
         Debug.Log("Setting up game");
+
         GameOver = false;
         EnablePlay = true;
         RemainingProjectiles = 5;
+
         UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: No active projectile";
         UIManager.Instance.TxtGameStatus.text = "";
     }
@@ -60,9 +61,10 @@ public class GameManager : Manager
     private void LevelWon(int _scoreTargetValue)
     {
         Debug.Log("Level won");
+
         TargetHit = true;
         EnablePlay = false;
-        
+
         UIManager.Instance.TxtGameStatus.text = "YOU WIN";
 
         StartCoroutine(ChangeLevel(GetNextLevelIndex(), m_nextLevelDelay));
@@ -187,7 +189,7 @@ public class GameManager : Manager
         return false;
     }
 
-    IEnumerator ChangeLevel(int _buildIndex, float _delay)
+    private IEnumerator ChangeLevel(int _buildIndex, float _delay)
     {
         Debug.Log("Loading level " + _buildIndex + " in " + _delay + " seconds");
 
@@ -197,7 +199,7 @@ public class GameManager : Manager
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (InputManager.Instance.Quit)
         {
@@ -305,5 +307,4 @@ public class GameManager : Manager
     }
 
     #endregion
-
 }
