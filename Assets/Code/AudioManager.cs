@@ -28,7 +28,7 @@ public class AudioManager : Manager
         public AudioSource source = null;
     }
 
-    private static AudioManager instance;
+    private static AudioManager m_instance = null;
 
     private List<string> m_currentlyPlayingSounds = new List<string>();
 
@@ -46,12 +46,12 @@ public class AudioManager : Manager
     {
         get
         {
-            return instance;
+            return m_instance;
         }
 
         private set
         {
-            instance = value;
+            m_instance = value;
         }
     }
 
@@ -150,9 +150,9 @@ public class AudioManager : Manager
 
     protected override void InitManager()
     {
-        if (instance == null)
+        if (m_instance == null)
         {
-            instance = this;
+            m_instance = this;
         }
         else
         {
@@ -171,6 +171,7 @@ public class AudioManager : Manager
 
     protected override void SetReferences()
     {
+        Debug.Log("AudioManager: Setting References");
         Debug.Log("No references");
     }
 }

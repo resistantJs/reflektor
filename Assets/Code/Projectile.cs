@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
     private float m_lifeTime = 0.0f;
 
     [SerializeField]
-    private readonly float m_minimumLifeTime = 0.15f;
+    private float m_minimumLifeTime = 0.15f;
 
     public delegate void ProjectileCreatedEvent(GameObject _projectile);
     public static event ProjectileCreatedEvent ProjectileCreated;
@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         ProjectileCreated(gameObject);
-        UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + RemainingBounces.ToString();
+        UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: " + RemainingBounces.ToString());
     }
 
     private void Update()
@@ -46,8 +46,9 @@ public class Projectile : MonoBehaviour
 
                 m_remainingBounces--;
 
-                UIManager.Instance.TxtRemainBounces.text = "Remaining Bounces: " + RemainingBounces.ToString();
+                UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: " + RemainingBounces.ToString());
 
+                Debug.Log("Playing projectiel collision sound");
                 AudioManager.Instance.Stop("ProjectileBounce");
                 AudioManager.Instance.Play("ProjectileBounce");
             }

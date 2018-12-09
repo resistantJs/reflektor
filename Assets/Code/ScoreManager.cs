@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class ScoreManager : Manager
 {
-    private static ScoreManager m_instance;
+    private static ScoreManager m_instance = null;
 
     private int m_totalScore = 0;
 
@@ -21,11 +21,6 @@ public class ScoreManager : Manager
     {
         InitManager();
         SetReferences();
-    }
-
-    private void Update()
-    {
-        Debug.Log("Current score: " + m_totalScore);
     }
 
     public int TotalScore
@@ -58,13 +53,13 @@ public class ScoreManager : Manager
     {
         Debug.Log("Score Manager calculate level score");
         TotalScore += _targetValue + GameManager.Instance.RemainingProjectiles * 5;
-        UIManager.Instance.TxtScore.text = "Score: " + m_totalScore;
+        UIManager.Instance.SetTxtScore("Score: " + m_totalScore);
     }
 
     public void ResetScore()
     {
         m_totalScore = 0;
-        UIManager.Instance.TxtScore.text = "Score: " + m_totalScore;
+        UIManager.Instance.SetTxtScore("Score: " + m_totalScore);
         Debug.Log("Score reset");
     }
 
@@ -89,6 +84,7 @@ public class ScoreManager : Manager
 
     protected override void SetReferences()
     {
+        Debug.Log("ScoreManager: Setting References");
         Debug.Log("No references");
     }
 }

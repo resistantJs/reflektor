@@ -2,7 +2,7 @@
 
 public class LauncherAim : MonoBehaviour
 {
-    private Camera m_camera;
+    private Camera m_camera = null;
 
     private void Awake()
     {

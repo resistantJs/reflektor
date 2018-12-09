@@ -3,11 +3,11 @@
 public class Wall : MonoBehaviour
 {
     [SerializeField]
-    private readonly float m_impactShakeDuration = 0.5f;
+    private float m_impactShakeDuration = 0.5f;
     [SerializeField]
-    private readonly float m_impactShakeMagnitude = 1f;
+    private float m_impactShakeMagnitude = 1f;
     [SerializeField]
-    private readonly float m_impactShakePerShakeReduction = 1f;
+    private float m_impactShakePerShakeReduction = 1f;
 
     private void OnCollisionEnter(Collision collision)
     {

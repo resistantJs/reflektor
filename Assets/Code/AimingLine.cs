@@ -3,20 +3,20 @@
 [RequireComponent(typeof(LineRenderer))]
 public class AimingLine : MonoBehaviour
 {
-    private LineRenderer m_lineRenderer;
+    private LineRenderer m_lineRenderer = null;
     private float m_projectileRadius = 0.0f;
 
     [SerializeField]
-    private GameObject m_projectile;
+    private GameObject m_projectile = null;
 
     [SerializeField]
     private LayerMask m_layers;
 
     [SerializeField]
-    private readonly float m_maxDistance = 1000f;
+    private float m_maxDistance = 1000f;
 
     [SerializeField]
-    private readonly float m_lengthMultiplier = 0.25f;
+    private float m_lengthMultiplier = 0.25f;
 
     private void Awake()
     {

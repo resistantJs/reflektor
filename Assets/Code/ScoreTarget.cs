@@ -3,7 +3,7 @@
 public class ScoreTarget : MonoBehaviour
 {
     [SerializeField]
-    private readonly int m_scoreValue = 100;
+    private int m_scoreValue = 100;
 
     public delegate void TargetHitEvent(int _scoreTargetValue);
     public static event TargetHitEvent TargetHit;

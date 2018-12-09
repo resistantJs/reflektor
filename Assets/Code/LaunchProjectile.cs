@@ -2,11 +2,16 @@
 
 public class LaunchProjectile : MonoBehaviour
 {
-    private Rigidbody m_projectileInstance;
+    private Rigidbody m_projectileInstance = null;
 
-    public Rigidbody projectilePrefab;
-    public Transform projectileStart;
-    public float launchVelocity = 5000.0f;
+    [SerializeField]
+    private Rigidbody projectilePrefab = null;
+
+    [SerializeField]
+    public Transform projectileStart = null;
+
+    [SerializeField]
+    private float launchVelocity = 5000.0f;
 
     // Update is called once per frame
     private void Update()

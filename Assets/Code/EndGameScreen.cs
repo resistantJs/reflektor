@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class EndGameScreen : MonoBehaviour
 {
-    private Text m_txtFinalScoreReadout;
+    private Text m_txtFinalScoreReadout = null;
 
     private void Awake()
     {

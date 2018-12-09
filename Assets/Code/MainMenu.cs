@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     private void Start()
     {
-        Debug.Log("Score reset");
+        Debug.Log("MainMenu: Score reset");
         ScoreManager.Instance.ResetScore();
     }
 

@@ -4,19 +4,15 @@ using UnityEngine.UI;
 
 public class UIManager : Manager
 {
-    private static UIManager m_instance;
+    private static UIManager m_instance = null;
 
-    private Text m_txtGameStatus;
-    private Text m_txtScore;
-    private Text m_txtRemainBounces;
-    private Text m_txtRemainProjectiles;
+    private Text m_txtGameStatus = null;
+    private Text m_txtScore = null;
+    private Text m_txtRemainBounces = null;
+    private Text m_txtRemainProjectiles = null;
 
-    // Use this for initialization
-    private void Awake()
-    {
-        InitManager();
-        SetReferences();
-    }
+    [SerializeField]
+    private int[] m_nonGameplayLevels = null;
 
     private void OnEnable()
     {
@@ -26,6 +22,13 @@ public class UIManager : Manager
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= NewLevelLoaded;
+    }
+
+    // Use this for initialization
+    private void Awake()
+    {
+        InitManager();
+        SetReferences();
     }
 
     protected override void InitManager()
@@ -44,10 +47,15 @@ public class UIManager : Manager
 
     protected override void SetReferences()
     {
-        m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
-        m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
-        m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
-        m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
+        Debug.Log("UIManager: Setting References");
+
+        if (InGameplayLevel())
+        {
+            m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
+            m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
+            m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
+            m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
+        }
     }
 
     protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
@@ -55,55 +63,76 @@ public class UIManager : Manager
         SetReferences();
     }
 
-    public Text TxtGameStatus
+    private bool InGameplayLevel()
     {
-        get
+        foreach (int element in m_nonGameplayLevels)
         {
-            return m_txtGameStatus;
+            if (SceneManager.GetActiveScene().buildIndex == element)
+            {
+                return false;
+            }
         }
 
-        set
+        return true;
+    }
+
+    public void SetTxtGameStatus(string _value)
+    {
+        if (m_txtGameStatus != null)
         {
-            m_txtGameStatus = value;
+            if (_value != null)
+            {
+                m_txtGameStatus.text = _value;
+            }
+        }
+        else
+        {
+            Debug.Log("m_txtGameStatus is null");
         }
     }
 
-    public Text TxtScore
+    public void SetTxtScore(string _value)
     {
-        get
+        if (m_txtScore != null)
         {
-            return m_txtScore;
+            if (_value != null)
+            {
+                m_txtScore.text = _value;
+            }
         }
-
-        set
+        else
         {
-            m_txtScore = value;
+            Debug.Log("m_txtScore is null");
         }
     }
 
-    public Text TxtRemainBounces
+    public void SetTxtRemainBounces(string _value)
     {
-        get
+        if (m_txtRemainBounces != null)
         {
-            return m_txtRemainBounces;
+            if (_value != null)
+            {
+                m_txtRemainBounces.text = _value;
+            }
         }
-
-        set
+        else
         {
-            m_txtRemainBounces = value;
+            Debug.Log("m_txtRemainBounces is null");
         }
     }
 
-    public Text TxtRemainProjectiles
+    public void SetTxtRemainProjectiles(string _value)
     {
-        get
+        if (m_txtRemainProjectiles != null)
         {
-            return m_txtRemainProjectiles;
+            if (_value != null)
+            {
+                m_txtRemainProjectiles.text = _value;
+            }
         }
-
-        set
+        else
         {
-            m_txtRemainProjectiles = value;
+            Debug.Log("m_txtRemainProjectiles is null");
         }
     }
 

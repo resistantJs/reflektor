@@ -98,7 +98,8 @@ public class EffectsManager : Manager
 
     protected override void SetReferences()
     {
-        m_mainCamera = UnityEngine.GameObject.Find("Main Camera").GetComponent<Camera>();
+        Debug.Log("EffectsManager: Setting References");
+        m_mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
