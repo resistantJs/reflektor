@@ -97,7 +97,6 @@ public class Projectile : MonoBehaviour
         ProjectileDestroyed(gameObject);
 
         GetComponent<SphereCollider>().enabled = false;
-        GetComponent<MeshRenderer>().enabled = false;
 
         StartCoroutine(DestroyAfterDelay(_delay));
     }

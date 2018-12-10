@@ -163,7 +163,7 @@ public class GameManager : Manager
         return false;
     }
 
-    private bool CheckGameOver()
+    private void CheckGameOver()
     {
         if (!OnMenu())
         {
@@ -188,17 +188,14 @@ public class GameManager : Manager
                             UIManager.Instance.SetTxtGameStatus("GAME OVER");
                             AudioManager.Instance.Play("GameOver");
 
-                            StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
-
                             GameIsOver();
 
-                            return true;
+                            StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
                         }
                     }
                 }
             }
         }
-        return false;
     }
 
     private IEnumerator ChangeLevel(int _buildIndex, float _delay)
