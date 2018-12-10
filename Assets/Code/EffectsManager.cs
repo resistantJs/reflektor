@@ -73,7 +73,6 @@ public class EffectsManager : Manager
             else
             {
                 _magnitude -= _shakeReduction * Time.deltaTime;
-
             }
 
             yield return null;

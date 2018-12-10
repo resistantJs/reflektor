@@ -13,6 +13,16 @@ public class LaunchProjectile : MonoBehaviour
     [SerializeField]
     private float launchVelocity = 5000.0f;
 
+    private void OnEnable()
+    {
+        Projectile.ProjectileDestroyed += ClearProjectileInstance;
+    }
+
+    private void OnDisable()
+    {
+        Projectile.ProjectileDestroyed -= ClearProjectileInstance;
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -27,5 +37,10 @@ public class LaunchProjectile : MonoBehaviour
             AudioManager.Instance.Stop("LauncherFire");
             AudioManager.Instance.Play("LauncherFire");
         }
+    }
+
+    private void ClearProjectileInstance(GameObject _projectile)
+    {
+        m_projectileInstance = null;
     }
 }

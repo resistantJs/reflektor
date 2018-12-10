@@ -234,7 +234,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 54433993242579406, guid: 38a90457f2a9b214da113bae1ccedd18,
     type: 2}
   projectileStart: {fileID: 4154558372053406}
-  launchVelocity: 5000
+  launchVelocity: 8500
 --- !u!114 &114947269301084850
 MonoBehaviour:
   m_ObjectHideFlags: 1

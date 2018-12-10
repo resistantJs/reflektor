@@ -18,6 +18,48 @@ public class AimingLine : MonoBehaviour
     [SerializeField]
     private float m_lengthMultiplier = 0.25f;
 
+    private void OnEnable()
+    {
+        GameManager.LevelWasWon += DisableAimLine;
+        GameManager.GameIsOver += DisableAimLine;
+        GameManager.LevelHasStarted += EnableAimLine;
+        Projectile.ProjectileCreated += DisableAimLine;
+        Projectile.ProjectileDestroyed += EnableAimLine;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.LevelWasWon -= DisableAimLine;
+        GameManager.GameIsOver -= DisableAimLine;
+        GameManager.LevelHasStarted -= EnableAimLine;
+        Projectile.ProjectileCreated -= DisableAimLine;
+        Projectile.ProjectileDestroyed -= EnableAimLine;
+    }
+    
+    private void DisableAimLine()
+    {
+        Debug.Log("Aim line disabled");
+        m_lineRenderer.enabled = false;
+    }
+
+    private void DisableAimLine(GameObject _projectile)
+    {
+        Debug.Log("Aim line disabled");
+        m_lineRenderer.enabled = false;
+    }
+
+    private void EnableAimLine()
+    {
+        Debug.Log("Aim line enabled");
+        m_lineRenderer.enabled = true;
+    }
+
+    private void EnableAimLine(GameObject _projectile)
+    {
+        Debug.Log("Aim line enabled");
+        m_lineRenderer.enabled = true;
+    }
+
     private void Awake()
     {
         m_lineRenderer = GetComponent<LineRenderer>();

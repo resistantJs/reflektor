@@ -18,7 +18,7 @@ public class ScoreTarget : MonoBehaviour
 
             AudioManager.Instance.Play("LevelComplete");
 
-            Destroy(collision.collider.gameObject);
+            //Destroy(collision.collider.gameObject);
         }
     }
 }

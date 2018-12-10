@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Projectile
   - Collidable
+  - Target
   layers:
   - Default
   - TransparentFX

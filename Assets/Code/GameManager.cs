@@ -16,6 +16,19 @@ public class GameManager : Manager
     [SerializeField]
     private float m_nextLevelDelay = 3.0f;
 
+    #region Events
+
+    public delegate void GameOverEvent();
+    public static event GameOverEvent GameIsOver;
+
+    public delegate void LevelWonEvent();
+    public static event LevelWonEvent LevelWasWon;
+
+    public delegate void LevelStartEvent();
+    public static event LevelStartEvent LevelHasStarted;
+
+    #endregion
+
     #endregion
 
     private void OnEnable()
@@ -41,11 +54,6 @@ public class GameManager : Manager
         SetReferences();
     }
 
-    public int ActiveLevelBuildIndex()
-    {
-        return SceneManager.GetActiveScene().buildIndex;
-    }
-
     private void SetUpGame()
     {
         Debug.Log("Setting up game");
@@ -56,6 +64,8 @@ public class GameManager : Manager
 
         UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: No active projectile");
         UIManager.Instance.SetTxtGameStatus("");
+
+        LevelHasStarted();
     }
 
     private void LevelWon(int _scoreTargetValue)
@@ -68,6 +78,8 @@ public class GameManager : Manager
         UIManager.Instance.SetTxtGameStatus("YOU WIN");
 
         StartCoroutine(ChangeLevel(GetNextLevelIndex(), m_nextLevelDelay));
+
+        LevelWasWon();
     }
 
     public void LevelSelectedLevel(int _buildIndex)
@@ -77,7 +89,7 @@ public class GameManager : Manager
 
     private int GetNextLevelIndex()
     {
-        int _nextLevelIndex = ActiveLevelBuildIndex() + 1;
+        int _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (_nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
         {
@@ -178,6 +190,8 @@ public class GameManager : Manager
 
                             StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
 
+                            GameIsOver();
+
                             return true;
                         }
                     }
@@ -201,7 +215,7 @@ public class GameManager : Manager
     {
         if (InputManager.Instance.Quit)
         {
-            if (ActiveLevelBuildIndex() != 0)
+            if (SceneManager.GetActiveScene().buildIndex != 0)
             {
                 SceneManager.LoadScene(0);
             }
