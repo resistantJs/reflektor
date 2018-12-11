@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         ProjectileCreated(gameObject);
-        UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: " + RemainingBounces.ToString());
+        UIManager.Instance.SetTxtRemainBounces(RemainingBounces, true);
     }
 
     private void Update()
@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Collidable")
-        {
+        { 
             if (RemainingBounces <= 0)
             {
                 DestroyProjectile(m_noBouncesDestroyDelay);
@@ -55,11 +55,15 @@ public class Projectile : MonoBehaviour
             {
                 Debug.Log("Hit collidable object");
 
+                IObstacle _obstacleScript = collision.collider.gameObject.GetComponent(typeof(IObstacle)) as IObstacle;
+                _obstacleScript.TriggerObstacleEffect(gameObject);
+                
                 m_remainingBounces--;
 
-                UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: " + RemainingBounces.ToString());
+                UIManager.Instance.SetTxtRemainBounces(RemainingBounces, true);
 
                 Debug.Log("Playing projectiel collision sound");
+
                 AudioManager.Instance.Stop("ProjectileBounce");
                 AudioManager.Instance.Play("ProjectileBounce");
             }

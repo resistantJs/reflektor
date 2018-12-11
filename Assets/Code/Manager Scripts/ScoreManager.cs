@@ -53,13 +53,13 @@ public class ScoreManager : Manager
     {
         Debug.Log("Score Manager calculate level score");
         TotalScore += _targetValue + GameManager.Instance.RemainingProjectiles * 5;
-        UIManager.Instance.SetTxtScore("Score: " + m_totalScore);
+        UIManager.Instance.SetTxtScore(m_totalScore);
     }
 
     public void ResetScore()
     {
         m_totalScore = 0;
-        UIManager.Instance.SetTxtScore("Score: " + m_totalScore);
+        UIManager.Instance.SetTxtScore(m_totalScore);
         Debug.Log("Score reset");
     }
 

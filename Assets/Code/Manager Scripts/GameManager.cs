@@ -62,8 +62,8 @@ public class GameManager : Manager
         EnablePlay = true;
         RemainingProjectiles = 5;
 
-        UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: No active projectile");
-        UIManager.Instance.SetTxtGameStatus("");
+        UIManager.Instance.SetTxtRemainBounces(0, false);
+        UIManager.Instance.SetTxtGameStatus(0);
 
         LevelHasStarted();
     }
@@ -75,7 +75,7 @@ public class GameManager : Manager
         TargetHit = true;
         EnablePlay = false;
 
-        UIManager.Instance.SetTxtGameStatus("YOU WIN");
+        UIManager.Instance.SetTxtGameStatus(2);
 
         StartCoroutine(ChangeLevel(GetNextLevelIndex(), m_nextLevelDelay));
 
@@ -106,7 +106,7 @@ public class GameManager : Manager
         if (RemainProjectiles > 0)
         {
             RemainProjectiles--;
-            UIManager.Instance.SetTxtRemainProjectiles("Remaining Projectiles: " + RemainProjectiles);
+            UIManager.Instance.SetTxtRemainProjectiles(RemainProjectiles);
         }
     }
 
@@ -121,7 +121,7 @@ public class GameManager : Manager
     private void ClearProjectileReference(GameObject _projectile)
     {
         ActiveProjectile = null;
-        UIManager.Instance.SetTxtRemainBounces("Remaining Bounces: No active projectile");
+        UIManager.Instance.SetTxtRemainBounces(0, false);
         CheckGameOver();
     }
 
@@ -185,10 +185,10 @@ public class GameManager : Manager
                             GameOver = true;
                             EnablePlay = false;
 
-                            UIManager.Instance.SetTxtGameStatus("GAME OVER");
-                            AudioManager.Instance.Play("GameOver");
-
                             GameIsOver();
+
+                            UIManager.Instance.SetTxtGameStatus(1);
+                            AudioManager.Instance.Play("GameOver");
 
                             StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
                         }

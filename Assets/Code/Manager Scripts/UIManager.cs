@@ -76,13 +76,21 @@ public class UIManager : Manager
         return true;
     }
 
-    public void SetTxtGameStatus(string _value)
+    public void SetTxtGameStatus(int _messageCode)
     {
         if (m_txtGameStatus != null)
         {
-            if (_value != null)
+            switch (_messageCode)
             {
-                m_txtGameStatus.text = _value;
+                case 0:
+                    m_txtGameStatus.text = "";
+                    break;
+                case 1:
+                    m_txtGameStatus.text = "GAME OVER";
+                    break;
+                case 2:
+                    m_txtGameStatus.text = "LEVEL CLEAR";
+                    break;
             }
         }
         else
@@ -91,13 +99,13 @@ public class UIManager : Manager
         }
     }
 
-    public void SetTxtScore(string _value)
+    public void SetTxtScore(int _value)
     {
         if (m_txtScore != null)
         {
-            if (_value != null)
+            if (_value > 0)
             {
-                m_txtScore.text = _value;
+                m_txtScore.text = "SCORE: " + _value;
             }
         }
         else
@@ -106,13 +114,17 @@ public class UIManager : Manager
         }
     }
 
-    public void SetTxtRemainBounces(string _value)
+    public void SetTxtRemainBounces(int _value, bool _projectileActive)
     {
         if (m_txtRemainBounces != null)
         {
-            if (_value != null)
+            if (_projectileActive)
             {
-                m_txtRemainBounces.text = _value;
+                m_txtRemainBounces.text = "BOUNCES: " + _value;
+            }
+            else
+            {
+                m_txtRemainBounces.text = "BOUNCES: NO PROJECTILE";
             }
         }
         else
@@ -121,14 +133,11 @@ public class UIManager : Manager
         }
     }
 
-    public void SetTxtRemainProjectiles(string _value)
+    public void SetTxtRemainProjectiles(int _value)
     {
         if (m_txtRemainProjectiles != null)
         {
-            if (_value != null)
-            {
-                m_txtRemainProjectiles.text = _value;
-            }
+            m_txtRemainProjectiles.text = "PROJECTILES: " + _value;
         }
         else
         {
