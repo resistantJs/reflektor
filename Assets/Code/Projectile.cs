@@ -55,11 +55,19 @@ public class Projectile : MonoBehaviour
             {
                 Debug.Log("Hit collidable object");
 
-                IObstacle _obstacleScript = collision.collider.gameObject.GetComponent(typeof(IObstacle)) as IObstacle;
-                _obstacleScript.TriggerObstacleEffect(gameObject);
-                
                 m_remainingBounces--;
 
+                try
+                {
+                    IObstacle _obstacleScript = collision.collider.gameObject.GetComponent(typeof(IObstacle)) as IObstacle;
+                    _obstacleScript.TriggerObstacleEffect(gameObject);
+                }
+                catch
+                {
+                    Debug.Log("Error detecting object");
+                }
+                
+                
                 UIManager.Instance.SetTxtRemainBounces(RemainingBounces, true);
 
                 Debug.Log("Playing projectiel collision sound");
@@ -94,6 +102,11 @@ public class Projectile : MonoBehaviour
             Debug.Log("Destroy command accepted");
             DestroyProjectile(0);
         }
+    }
+
+    public void DestroyProjectileExternal(float _delay)
+    {
+        DestroyProjectile(_delay);
     }
 
     private void DestroyProjectile(float _delay)

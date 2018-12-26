@@ -5,6 +5,6 @@ public class DeadObstacle : MonoBehaviour, IObstacle
     public void TriggerObstacleEffect(GameObject _projectile)
     {
         Debug.Log("DeadObstacle effect triggered");
-        Destroy(_projectile);
+        _projectile.GetComponent<Projectile>().DestroyProjectileExternal(0);
     }
 }
