@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
-    #region Properties
-
     private int m_remainingBounces = 5;
     private float m_lifeTime = 0.0f;
 
@@ -14,17 +12,11 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float m_noBouncesDestroyDelay = 3f;
 
-    #region Events
-
     public delegate void ProjectileCreatedEvent(GameObject _projectile);
     public static event ProjectileCreatedEvent ProjectileCreated;
 
     public delegate void ProjectDestroyedEvent(GameObject _projectile);
     public static event ProjectDestroyedEvent ProjectileDestroyed;
-
-    #endregion
-
-    #endregion
 
     private void Awake()
     {
@@ -55,22 +47,13 @@ public class Projectile : MonoBehaviour
             {
                 Debug.Log("Hit collidable object");
 
-                m_remainingBounces--;
+                DecrementBounces();
 
-                try
-                {
-                    IObstacle _obstacleScript = collision.collider.gameObject.GetComponent(typeof(IObstacle)) as IObstacle;
-                    _obstacleScript.TriggerObstacleEffect(gameObject);
-                }
-                catch
-                {
-                    Debug.Log("Error detecting object");
-                }
-                
-                
+                TriggerObstacleEffect(collision);
+
                 UIManager.Instance.SetTxtRemainBounces(RemainingBounces, true);
 
-                Debug.Log("Playing projectiel collision sound");
+                Debug.Log("Playing projectile collision sound");
 
                 AudioManager.Instance.Stop("ProjectileBounce");
                 AudioManager.Instance.Play("ProjectileBounce");
@@ -92,6 +75,27 @@ public class Projectile : MonoBehaviour
         private set
         {
             m_remainingBounces = value;
+        }
+    }
+
+    private void DecrementBounces()
+    {
+        m_remainingBounces--;
+    }
+
+    private void TriggerObstacleEffect(Collision _collision)
+    {
+        if (_collision.collider.gameObject.GetComponent(typeof(IObstacle)) as IObstacle != null)
+        {
+            IObstacle _obstacleScript = _collision.collider.gameObject.GetComponent(typeof(IObstacle)) as IObstacle;
+
+            _obstacleScript.TriggerObstacleEffect(gameObject);
+
+            Debug.Log("Hit object was an IObstacle");
+        }
+        else
+        {
+            Debug.Log("Hit object was not an IObstacle");
         }
     }
 
