@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    private readonly int m_maxRemainingBounces = 5;
+
     private int m_remainingBounces = 5;
     private float m_lifeTime = 0.0f;
 
@@ -108,11 +110,6 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void DestroyProjectileExternal(float _delay)
-    {
-        DestroyProjectile(_delay);
-    }
-
     private void DestroyProjectile(float _delay)
     {
         ProjectileDestroyed(gameObject);
@@ -126,5 +123,21 @@ public class Projectile : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(_delay);
         Destroy(gameObject);
+    }
+
+    public void DestroyProjectileExternal(float _delay)
+    {
+        DestroyProjectile(_delay);
+    }
+
+    public void RestoreBounces(int _amount)
+    {
+        if (_amount > 0)
+        {
+            if (!(m_remainingBounces + _amount <= m_remainingBounces))
+            {
+                m_remainingBounces = m_maxRemainingBounces;
+            }
+        }
     }
 }
