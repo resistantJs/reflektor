@@ -4,33 +4,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Manager
 {
-    #region Properties
-
+    // Properties
     private static GameManager m_instance = null;
     private GameObject m_activeProjectile = null;
     private int m_remainProjectiles = 5;
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
     private bool m_targetHit = false;
-
+    [SerializeField]
+    private int[] m_menuLevels;
     [SerializeField]
     private float m_nextLevelDelay = 3.0f;
 
-    #region Events
-
+    // Events
     public delegate void GameOverEvent();
     public static event GameOverEvent GameIsOver;
-
     public delegate void LevelWonEvent();
     public static event LevelWonEvent LevelWasWon;
-
     public delegate void LevelStartEvent();
     public static event LevelStartEvent LevelHasStarted;
 
-    #endregion
-
-    #endregion
-
+    // Subscribing to events
     private void OnEnable()
     {
         ScoreTarget.TargetHit += LevelWon;
@@ -39,6 +33,7 @@ public class GameManager : Manager
         SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
+    // Unsuscribing from events
     private void OnDisable()
     {
         ScoreTarget.TargetHit -= LevelWon;
@@ -47,7 +42,7 @@ public class GameManager : Manager
         SceneManager.sceneLoaded -= NewLevelLoaded;
     }
 
-    // Use this for initialization
+    // Initialisation
     private void Awake()
     {
         InitManager();
@@ -60,6 +55,7 @@ public class GameManager : Manager
 
         GameOver = false;
         EnablePlay = true;
+        TargetHit = false;
         RemainingProjectiles = 5;
 
         UIManager.Instance.SetTxtRemainBounces(0, false);
@@ -151,13 +147,16 @@ public class GameManager : Manager
         SetUpGame();
     }
 
-    private bool OnMenu()
+    public bool OnMenu()
     {
         int _activeSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
-        if (_activeSceneBuildIndex == 0 || _activeSceneBuildIndex == 4)
+        foreach (int element in m_menuLevels)
         {
-            return true;
+            if (element == _activeSceneBuildIndex)
+            {
+                return true;
+            }
         }
 
         return false;
@@ -167,20 +166,22 @@ public class GameManager : Manager
     {
         if (!OnMenu())
         {
+            Debug.Log("Game Over Check: Not on menu");
             if (ActiveProjectile == null)
             {
-                Debug.Log("No active projectile");
-                if (RemainingProjectiles <= 0)
+                Debug.Log("Game Over Check: No active projectile");
+                if (m_remainProjectiles <= 0)
                 {
-                    Debug.Log("No remaining projectiles");
+                    Debug.Log("Game Over Check: No remaining projectiles");
                     if (!TargetHit)
                     {
-                        Debug.Log("Target has not been hit");
+                        Debug.Log("Game Over Check: Target has not been hit");
                         if (!GameOver)
                         {
-                            Debug.Log("Game is not already over");
+                            Debug.Log("Game Over Check: Game is not already over");
+                            Debug.Log("Game Over Check: Game Over");
 
-                            Debug.Log("Game Over");
+                            GameOverScreen.SetLastLevelIndex(SceneManager.GetActiveScene().buildIndex);
 
                             GameOver = true;
                             EnablePlay = false;
@@ -190,11 +191,15 @@ public class GameManager : Manager
                             UIManager.Instance.SetTxtGameStatus(1);
                             AudioManager.Instance.Play("GameOver");
 
-                            StartCoroutine(ChangeLevel(0, m_nextLevelDelay));
+                            StartCoroutine(ChangeLevel(1, m_nextLevelDelay));
                         }
                     }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("On menu");
         }
     }
 
@@ -222,8 +227,6 @@ public class GameManager : Manager
             }
         }
     }
-
-    #region Accessors
 
     public static GameManager Instance
     {
@@ -268,11 +271,11 @@ public class GameManager : Manager
     {
         get
         {
-            return RemainProjectiles;
+            return m_remainProjectiles;
         }
         private set
         {
-            RemainProjectiles = value;
+            m_remainProjectiles = value;
         }
     }
 
@@ -314,6 +317,4 @@ public class GameManager : Manager
             m_remainProjectiles = value;
         }
     }
-
-    #endregion
 }

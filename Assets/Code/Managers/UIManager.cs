@@ -11,9 +11,6 @@ public class UIManager : Manager
     private Text m_txtRemainBounces = null;
     private Text m_txtRemainProjectiles = null;
 
-    [SerializeField]
-    private int[] m_nonGameplayLevels = null;
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += NewLevelLoaded;
@@ -49,7 +46,7 @@ public class UIManager : Manager
     {
         Debug.Log("UIManager: Setting References");
 
-        if (InGameplayLevel())
+        if (!GameManager.Instance.OnMenu())
         {
             m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
             m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
@@ -61,19 +58,6 @@ public class UIManager : Manager
     protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
     {
         SetReferences();
-    }
-
-    private bool InGameplayLevel()
-    {
-        foreach (int element in m_nonGameplayLevels)
-        {
-            if (SceneManager.GetActiveScene().buildIndex == element)
-            {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public void SetTxtGameStatus(int _messageCode)
