@@ -6,6 +6,8 @@ public class UIManager : Manager
 {
     private static UIManager m_instance = null;
 
+    [SerializeField]
+    private int[] m_menuLevels;
     private Text m_txtGameStatus = null;
     private Text m_txtScore = null;
     private Text m_txtRemainBounces = null;
@@ -46,18 +48,39 @@ public class UIManager : Manager
     {
         Debug.Log("UIManager: Setting References");
 
-        if (!GameManager.Instance.OnMenu())
+        if (!OnMenu())
         {
+            Debug.Log("UIManager SetReferences: on gameplay level, setting references");
+
             m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
             m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
             m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
             m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
+        }
+        else
+        {
+            Debug.Log("UIManager SetReferences: not on gameplay level, not setting references");
         }
     }
 
     protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
     {
         SetReferences();
+    }
+
+    private bool OnMenu()
+    {
+        int _activeSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
+
+        foreach (int element in m_menuLevels)
+        {
+            if (element == _activeSceneBuildIndex)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void SetTxtGameStatus(int _messageCode)

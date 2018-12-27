@@ -147,7 +147,7 @@ public class GameManager : Manager
         SetUpGame();
     }
 
-    public bool OnMenu()
+    private bool OnMenu()
     {
         int _activeSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
 
