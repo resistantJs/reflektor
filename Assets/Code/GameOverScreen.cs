@@ -3,14 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour 
 {
-    private static int m_lastLevelIndex = 0;
+    private int m_lastLevelIndex = 0;
 
-    public static void SetLastLevelIndex(int _index)
+    public void Awake()
     {
-        if (_index > 0 && _index < SceneManager.sceneCountInBuildSettings)
-        {
-            m_lastLevelIndex = _index;
-        }
+        m_lastLevelIndex = GameManager.Instance.LastLevelIndex;
     }
 
     public void GoToMainMenu()

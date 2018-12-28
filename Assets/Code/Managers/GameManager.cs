@@ -8,6 +8,7 @@ public class GameManager : Manager
     private static GameManager m_instance = null;
     private GameObject m_activeProjectile = null;
     private int m_remainProjectiles = 5;
+    private int m_lastLevelIndex = 0;
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
     private bool m_targetHit = false;
@@ -181,7 +182,7 @@ public class GameManager : Manager
                             Debug.Log("Game Over Check: Game is not already over");
                             Debug.Log("Game Over Check: Game Over");
 
-                            GameOverScreen.SetLastLevelIndex(SceneManager.GetActiveScene().buildIndex);
+                            m_lastLevelIndex = SceneManager.GetActiveScene().buildIndex;
 
                             GameOver = true;
                             EnablePlay = false;
@@ -315,6 +316,19 @@ public class GameManager : Manager
         private set
         {
             m_remainProjectiles = value;
+        }
+    }
+
+    public int LastLevelIndex
+    {
+        get
+        {
+            return m_lastLevelIndex;
+        }
+
+        private set
+        {
+            m_lastLevelIndex = value;
         }
     }
 }
