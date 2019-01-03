@@ -35,7 +35,7 @@ public class AimingLine : MonoBehaviour
         Projectile.ProjectileCreated -= DisableAimLine;
         Projectile.ProjectileDestroyed -= EnableAimLine;
     }
-    
+
     private void DisableAimLine()
     {
         Debug.Log("Aim line disabled");

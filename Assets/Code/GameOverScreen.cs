@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameOverScreen : MonoBehaviour 
+public class GameOverScreen : MonoBehaviour
 {
     private int m_lastLevelIndex = 0;
 
     public void Awake()
     {
-        m_lastLevelIndex = GameManager.Instance.LastLevelIndex;
+        m_lastLevelIndex = LevelManager.Instance.LastLevelIndex;
     }
 
     public void GoToMainMenu()

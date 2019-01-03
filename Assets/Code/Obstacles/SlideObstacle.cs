@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Transform))]
-public class SlideObstacle : MonoBehaviour 
+public class SlideObstacle : MonoBehaviour
 {
     private Transform m_transform = null;
     [SerializeField]
@@ -23,7 +23,7 @@ public class SlideObstacle : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         float _maxStepDistance = m_speed * Time.deltaTime;
 

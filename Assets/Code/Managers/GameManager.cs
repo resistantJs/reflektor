@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Manager
@@ -8,14 +7,9 @@ public class GameManager : Manager
     private static GameManager m_instance = null;
     private GameObject m_activeProjectile = null;
     private int m_remainProjectiles = 5;
-    private int m_lastLevelIndex = 0;
     private bool m_enablePlay = true;
     private bool m_gameOver = false;
     private bool m_targetHit = false;
-    [SerializeField]
-    private int[] m_menuLevels;
-    [SerializeField]
-    private float m_nextLevelDelay = 3.0f;
 
     // Events
     public delegate void GameOverEvent();
@@ -74,28 +68,9 @@ public class GameManager : Manager
 
         UIManager.Instance.SetTxtGameStatus(2);
 
-        StartCoroutine(ChangeLevel(GetNextLevelIndex(), m_nextLevelDelay));
+        LevelManager.Instance.ChangeLevel(LevelManager.Instance.GetNextLevelIndex(), LevelManager.Instance.NextLevelDelay);
 
         LevelWasWon();
-    }
-
-    public void LevelSelectedLevel(int _buildIndex)
-    {
-        SceneManager.LoadScene(_buildIndex);
-    }
-
-    private int GetNextLevelIndex()
-    {
-        int _nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
-        if (_nextLevelIndex >= SceneManager.sceneCountInBuildSettings)
-        {
-            return 0;
-        }
-        else
-        {
-            return SceneManager.GetActiveScene().buildIndex + 1;
-        }
     }
 
     public void UseProjectile()
@@ -148,24 +123,9 @@ public class GameManager : Manager
         SetUpGame();
     }
 
-    private bool OnMenu()
-    {
-        int _activeSceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-
-        foreach (int element in m_menuLevels)
-        {
-            if (element == _activeSceneBuildIndex)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void CheckGameOver()
     {
-        if (!OnMenu())
+        if (!LevelManager.Instance.OnMenu())
         {
             Debug.Log("Game Over Check: Not on menu");
             if (ActiveProjectile == null)
@@ -182,8 +142,6 @@ public class GameManager : Manager
                             Debug.Log("Game Over Check: Game is not already over");
                             Debug.Log("Game Over Check: Game Over");
 
-                            m_lastLevelIndex = SceneManager.GetActiveScene().buildIndex;
-
                             GameOver = true;
                             EnablePlay = false;
 
@@ -192,7 +150,7 @@ public class GameManager : Manager
                             UIManager.Instance.SetTxtGameStatus(1);
                             AudioManager.Instance.Play("GameOver");
 
-                            StartCoroutine(ChangeLevel(1, m_nextLevelDelay));
+                            LevelManager.Instance.ChangeLevel(1, LevelManager.Instance.NextLevelDelay);
                         }
                     }
                 }
@@ -202,15 +160,6 @@ public class GameManager : Manager
         {
             Debug.Log("On menu");
         }
-    }
-
-    private IEnumerator ChangeLevel(int _buildIndex, float _delay)
-    {
-        Debug.Log("Loading level " + _buildIndex + " in " + _delay + " seconds");
-
-        yield return new WaitForSecondsRealtime(_delay);
-
-        SceneManager.LoadScene(_buildIndex);
     }
 
     // Update is called once per frame
@@ -236,7 +185,7 @@ public class GameManager : Manager
             return m_instance;
         }
 
-        set
+        private set
         {
             m_instance = value;
         }
@@ -316,19 +265,6 @@ public class GameManager : Manager
         private set
         {
             m_remainProjectiles = value;
-        }
-    }
-
-    public int LastLevelIndex
-    {
-        get
-        {
-            return m_lastLevelIndex;
-        }
-
-        private set
-        {
-            m_lastLevelIndex = value;
         }
     }
 }

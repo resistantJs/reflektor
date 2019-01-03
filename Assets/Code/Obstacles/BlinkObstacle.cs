@@ -6,7 +6,7 @@ public class BlinkObstacle : MonoBehaviour, IObstacle
     private MeshRenderer m_meshRenderer = null;
     private BoxCollider m_boxCollider = null;
     [SerializeField]
-    private  float m_cyclePeriod = 1.0f;
+    private float m_cyclePeriod = 1.0f;
     private float m_counter = 0.0f;
     private bool m_invisible = false;
 
@@ -35,8 +35,8 @@ public class BlinkObstacle : MonoBehaviour, IObstacle
     }
 
     // Update is called once per frame
-    void Update() 
-	{
+    private void Update()
+    {
         m_counter += Time.deltaTime;
 
         Cycle();
