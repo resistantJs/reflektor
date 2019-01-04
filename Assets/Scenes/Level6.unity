@@ -156,6 +156,14 @@ Prefab:
       propertyPath: m_Name
       value: SlideObstacleHolder (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4068583814179902, guid: f2467d0ded466e14c8629671f939401c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -28.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4739107266779210, guid: f2467d0ded466e14c8629671f939401c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f2467d0ded466e14c8629671f939401c, type: 2}
   m_IsPrefabParent: 0
@@ -565,7 +573,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4837279350708094, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.5000005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4837279350708094, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1430,7 +1438,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4837279350708094, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 9.7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4837279350708094, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1689,7 +1697,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4837279350708094, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 10.2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4837279350708094, guid: faeba40479b05374d9e9085b6a61eb10, type: 2}
       propertyPath: m_LocalPosition.y

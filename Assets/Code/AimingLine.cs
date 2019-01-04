@@ -5,58 +5,14 @@ public class AimingLine : MonoBehaviour
 {
     private LineRenderer m_lineRenderer = null;
     private float m_projectileRadius = 0.0f;
-
     [SerializeField]
     private GameObject m_projectile = null;
-
     [SerializeField]
     private LayerMask m_layers;
-
     [SerializeField]
     private float m_maxDistance = 1000f;
-
     [SerializeField]
     private float m_lengthMultiplier = 0.25f;
-
-    private void OnEnable()
-    {
-        GameManager.LevelWasWon += DisableAimLine;
-        GameManager.GameIsOver += DisableAimLine;
-        GameManager.LevelHasStarted += EnableAimLine;
-        Projectile.ProjectileStateChanged += ToggleAimLine;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.LevelWasWon -= DisableAimLine;
-        GameManager.GameIsOver -= DisableAimLine;
-        GameManager.LevelHasStarted -= EnableAimLine;
-        Projectile.ProjectileStateChanged -= ToggleAimLine;
-    }
-
-    private void DisableAimLine()
-    {
-        Debug.Log("Aim line disabled");
-        m_lineRenderer.enabled = false;
-    }
-
-    private void EnableAimLine()
-    {
-        Debug.Log("Aim line enabled");
-        m_lineRenderer.enabled = true;
-    }
-
-    private void ToggleAimLine(GameObject _projectile)
-    {
-        if (_projectile == null)
-        {
-            DisableAimLine();
-        }
-        else
-        {
-            EnableAimLine();
-        }
-    }
 
     private void Awake()
     {
@@ -72,6 +28,20 @@ public class AimingLine : MonoBehaviour
     private void Update()
     {
         DrawAimLine();
+        if (GameManager.Instance.EnablePlay)
+        {
+            if (m_lineRenderer.enabled == false)
+            {
+                m_lineRenderer.enabled = true;
+            }
+        }
+        else
+        {
+            if (m_lineRenderer.enabled)
+            {
+                m_lineRenderer.enabled = false;
+            }
+        }
     }
 
     private void DrawAimLine()

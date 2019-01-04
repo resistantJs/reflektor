@@ -109,7 +109,7 @@ public class Projectile : MonoBehaviour
 
     private void DestroyProjectile(float _delay)
     {
-        ProjectileStateChanged(gameObject);
+        ProjectileStateChanged(null);
 
         GetComponent<SphereCollider>().enabled = false;
 

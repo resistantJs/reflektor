@@ -12,14 +12,6 @@ public class GameManager : Manager
     private bool m_gameOver = false;
     private bool m_targetHit = false;
 
-    // Events
-    public delegate void GameOverEvent();
-    public static event GameOverEvent GameIsOver;
-    public delegate void LevelWonEvent();
-    public static event LevelWonEvent LevelWasWon;
-    public delegate void LevelStartEvent();
-    public static event LevelStartEvent LevelHasStarted;
-
     // Subscribing to events
     private void OnEnable()
     {
@@ -51,12 +43,11 @@ public class GameManager : Manager
         m_gameOver = false;
         m_enablePlay = true;
         m_targetHit = false;
+
         m_remainProjectiles = 5;
 
         UIManager.Instance.SetTxtRemainBounces(0, false);
         UIManager.Instance.SetTxtGameStatus(0);
-
-        LevelHasStarted();
     }
 
     private void SetTargetHit(int _scoreTargetValue)
@@ -76,8 +67,6 @@ public class GameManager : Manager
         AudioManager.Instance.Play("LevelComplete");
 
         LevelManager.Instance.ChangeLevel(LevelManager.Instance.GetNextLevelIndex(), LevelManager.Instance.NextLevelDelay);
-
-        LevelWasWon();
     }
 
     private void StateGameOver()
@@ -87,8 +76,6 @@ public class GameManager : Manager
 
         m_gameOver = true;
         m_enablePlay = false;
-
-        GameIsOver();
 
         UIManager.Instance.SetTxtGameStatus(1);
         AudioManager.Instance.Play("GameOver");
@@ -110,10 +97,12 @@ public class GameManager : Manager
         if (_projectile != null)
         {
             m_activeProjectile = _projectile;
+            m_enablePlay = false;
         }
         else
         {
             m_activeProjectile = null;
+            m_enablePlay = true;
             UIManager.Instance.SetTxtRemainBounces(0, false);
         }
     }
