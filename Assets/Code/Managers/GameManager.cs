@@ -8,6 +8,7 @@ public class GameManager : Manager
     private GameObject m_activeProjectile = null;
     private int m_remainProjectiles = 5;
     private bool m_enablePlay = true;
+    private bool m_levelClear = false;
     private bool m_gameOver = false;
     private bool m_targetHit = false;
 
@@ -22,18 +23,16 @@ public class GameManager : Manager
     // Subscribing to events
     private void OnEnable()
     {
-        ScoreTarget.TargetHit += LevelWon;
-        Projectile.ProjectileCreated += SetProjectileReference;
-        Projectile.ProjectileDestroyed += ClearProjectileReference;
+        ScoreTarget.TargetHit += SetTargetHit;
+        Projectile.ProjectileStateChanged += SetProjectileReference;
         SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
     // Unsuscribing from events
     private void OnDisable()
     {
-        ScoreTarget.TargetHit -= LevelWon;
-        Projectile.ProjectileCreated -= SetProjectileReference;
-        Projectile.ProjectileDestroyed -= ClearProjectileReference;
+        ScoreTarget.TargetHit -= SetTargetHit;
+        Projectile.ProjectileStateChanged -= SetProjectileReference;
         SceneManager.sceneLoaded -= NewLevelLoaded;
     }
 
@@ -48,10 +47,11 @@ public class GameManager : Manager
     {
         Debug.Log("Setting up game");
 
-        GameOver = false;
-        EnablePlay = true;
-        TargetHit = false;
-        RemainingProjectiles = 5;
+        m_levelClear = false;
+        m_gameOver = false;
+        m_enablePlay = true;
+        m_targetHit = false;
+        m_remainProjectiles = 5;
 
         UIManager.Instance.SetTxtRemainBounces(0, false);
         UIManager.Instance.SetTxtGameStatus(0);
@@ -59,26 +59,49 @@ public class GameManager : Manager
         LevelHasStarted();
     }
 
-    private void LevelWon(int _scoreTargetValue)
+    private void SetTargetHit(int _scoreTargetValue)
+    {
+        m_targetHit = true;
+    }
+
+    private void StateLevelClear()
     {
         Debug.Log("Level won");
 
-        TargetHit = true;
-        EnablePlay = false;
+        m_levelClear = true;
+        m_targetHit = true;
+        m_enablePlay = false;
 
         UIManager.Instance.SetTxtGameStatus(2);
+        AudioManager.Instance.Play("LevelComplete");
 
         LevelManager.Instance.ChangeLevel(LevelManager.Instance.GetNextLevelIndex(), LevelManager.Instance.NextLevelDelay);
 
         LevelWasWon();
     }
 
+    private void StateGameOver()
+    {
+        Debug.Log("Game Over Check: Game is not already over");
+        Debug.Log("Game Over Check: Game Over");
+
+        m_gameOver = true;
+        m_enablePlay = false;
+
+        GameIsOver();
+
+        UIManager.Instance.SetTxtGameStatus(1);
+        AudioManager.Instance.Play("GameOver");
+
+        LevelManager.Instance.ChangeLevel(1, LevelManager.Instance.NextLevelDelay);
+    }
+
     public void UseProjectile()
     {
-        if (RemainProjectiles > 0)
+        if (m_remainProjectiles > 0)
         {
-            RemainProjectiles--;
-            UIManager.Instance.SetTxtRemainProjectiles(RemainProjectiles);
+            m_remainProjectiles--;
+            UIManager.Instance.SetTxtRemainProjectiles(m_remainProjectiles);
         }
     }
 
@@ -86,15 +109,13 @@ public class GameManager : Manager
     {
         if (_projectile != null)
         {
-            ActiveProjectile = _projectile;
+            m_activeProjectile = _projectile;
         }
-    }
-
-    private void ClearProjectileReference(GameObject _projectile)
-    {
-        ActiveProjectile = null;
-        UIManager.Instance.SetTxtRemainBounces(0, false);
-        CheckGameOver();
+        else
+        {
+            m_activeProjectile = null;
+            UIManager.Instance.SetTxtRemainBounces(0, false);
+        }
     }
 
     protected override void InitManager()
@@ -123,47 +144,50 @@ public class GameManager : Manager
         SetUpGame();
     }
 
-    private void CheckGameOver()
+    private void CheckGameState()
     {
         if (!LevelManager.Instance.OnMenu())
         {
-            Debug.Log("Game Over Check: Not on menu");
-            if (ActiveProjectile == null)
+            Debug.Log("CheckGameState: Not on menu");
+
+            if (!m_targetHit)
             {
-                Debug.Log("Game Over Check: No active projectile");
-                if (m_remainProjectiles <= 0)
+                Debug.Log("CheckGameState: Target has not been hit");
+
+                if (m_activeProjectile == null)
                 {
-                    Debug.Log("Game Over Check: No remaining projectiles");
-                    if (!TargetHit)
+                    Debug.Log("CheckGameState: No active projectile");
+
+                    if (m_remainProjectiles <= 0)
                     {
-                        Debug.Log("Game Over Check: Target has not been hit");
-                        if (!GameOver)
+                        Debug.Log("CheckGameState: No remaining projectiles");
+
+                        if (!m_gameOver)
                         {
-                            Debug.Log("Game Over Check: Game is not already over");
-                            Debug.Log("Game Over Check: Game Over");
+                            Debug.Log("CheckGameState: Game is not already over");
 
-                            GameOver = true;
-                            EnablePlay = false;
-
-                            GameIsOver();
-
-                            UIManager.Instance.SetTxtGameStatus(1);
-                            AudioManager.Instance.Play("GameOver");
-
-                            LevelManager.Instance.ChangeLevel(1, LevelManager.Instance.NextLevelDelay);
+                            StateGameOver();
                         }
                     }
+                }
+            }
+            else
+            {
+                if (!m_levelClear)
+                {
+                    Debug.Log("CheckGameState: Target has been hit");
+
+                    StateLevelClear();
                 }
             }
         }
         else
         {
-            Debug.Log("On menu");
+            Debug.Log("CheckGameOver: On a menu");
         }
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void Quit()
     {
         if (InputManager.Instance.Quit)
         {
@@ -176,6 +200,13 @@ public class GameManager : Manager
                 Application.Quit();
             }
         }
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        Quit();
+        CheckGameState();
     }
 
     public static GameManager Instance
@@ -191,16 +222,15 @@ public class GameManager : Manager
         }
     }
 
-    public bool GameOver
+    public int RemainingProjectiles
     {
         get
         {
-            return m_gameOver;
+            return m_remainProjectiles;
         }
-
         private set
         {
-            m_gameOver = value;
+            m_remainProjectiles = value;
         }
     }
 
@@ -214,57 +244,6 @@ public class GameManager : Manager
         private set
         {
             m_enablePlay = value;
-        }
-    }
-
-    public int RemainingProjectiles
-    {
-        get
-        {
-            return m_remainProjectiles;
-        }
-        private set
-        {
-            m_remainProjectiles = value;
-        }
-    }
-
-    public bool TargetHit
-    {
-        get
-        {
-            return m_targetHit;
-        }
-
-        private set
-        {
-            m_targetHit = value;
-        }
-    }
-
-    private GameObject ActiveProjectile
-    {
-        get
-        {
-            return m_activeProjectile;
-        }
-
-        set
-        {
-            m_activeProjectile = value;
-        }
-    }
-
-    public int RemainProjectiles
-    {
-        get
-        {
-            return m_remainProjectiles;
-        }
-
-        private set
-        {
-            m_remainProjectiles = value;
         }
     }
 }

@@ -15,12 +15,12 @@ public class LaunchProjectile : MonoBehaviour
 
     private void OnEnable()
     {
-        Projectile.ProjectileDestroyed += ClearProjectileInstance;
+        Projectile.ProjectileStateChanged += ClearProjectileInstance;
     }
 
     private void OnDisable()
     {
-        Projectile.ProjectileDestroyed -= ClearProjectileInstance;
+        Projectile.ProjectileStateChanged -= ClearProjectileInstance;
     }
 
     // Update is called once per frame
@@ -41,6 +41,9 @@ public class LaunchProjectile : MonoBehaviour
 
     private void ClearProjectileInstance(GameObject _projectile)
     {
-        m_projectileInstance = null;
+        if (_projectile == null)
+        {
+            m_projectileInstance = null;
+        }
     }
 }

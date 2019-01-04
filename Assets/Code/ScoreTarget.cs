@@ -12,13 +12,9 @@ public class ScoreTarget : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            Debug.Log("Hit");
+            Debug.Log("Score Target Hit");
 
             TargetHit(m_scoreValue);
-
-            AudioManager.Instance.Play("LevelComplete");
-
-            //Destroy(collision.collider.gameObject);
         }
     }
 }

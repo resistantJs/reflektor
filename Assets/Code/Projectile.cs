@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -14,11 +14,8 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float m_noBouncesDestroyDelay = 3f;
 
-    public delegate void ProjectileCreatedEvent(GameObject _projectile);
-    public static event ProjectileCreatedEvent ProjectileCreated;
-
-    public delegate void ProjectDestroyedEvent(GameObject _projectile);
-    public static event ProjectDestroyedEvent ProjectileDestroyed;
+    public delegate void ProjectileStateChangeEvent(GameObject _projectile);
+    public static event ProjectileStateChangeEvent ProjectileStateChanged;
 
     private void Awake()
     {
@@ -27,7 +24,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        ProjectileCreated(gameObject);
+        ProjectileStateChanged(gameObject);
         UIManager.Instance.SetTxtRemainBounces(RemainingBounces, true);
     }
 
@@ -40,7 +37,7 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Collidable")
-        { 
+        {
             if (RemainingBounces <= 0)
             {
                 DestroyProjectile(m_noBouncesDestroyDelay);
@@ -112,7 +109,7 @@ public class Projectile : MonoBehaviour
 
     private void DestroyProjectile(float _delay)
     {
-        ProjectileDestroyed(gameObject);
+        ProjectileStateChanged(gameObject);
 
         GetComponent<SphereCollider>().enabled = false;
 

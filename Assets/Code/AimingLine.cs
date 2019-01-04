@@ -23,8 +23,7 @@ public class AimingLine : MonoBehaviour
         GameManager.LevelWasWon += DisableAimLine;
         GameManager.GameIsOver += DisableAimLine;
         GameManager.LevelHasStarted += EnableAimLine;
-        Projectile.ProjectileCreated += DisableAimLine;
-        Projectile.ProjectileDestroyed += EnableAimLine;
+        Projectile.ProjectileStateChanged += ToggleAimLine;
     }
 
     private void OnDisable()
@@ -32,17 +31,10 @@ public class AimingLine : MonoBehaviour
         GameManager.LevelWasWon -= DisableAimLine;
         GameManager.GameIsOver -= DisableAimLine;
         GameManager.LevelHasStarted -= EnableAimLine;
-        Projectile.ProjectileCreated -= DisableAimLine;
-        Projectile.ProjectileDestroyed -= EnableAimLine;
+        Projectile.ProjectileStateChanged -= ToggleAimLine;
     }
 
     private void DisableAimLine()
-    {
-        Debug.Log("Aim line disabled");
-        m_lineRenderer.enabled = false;
-    }
-
-    private void DisableAimLine(GameObject _projectile)
     {
         Debug.Log("Aim line disabled");
         m_lineRenderer.enabled = false;
@@ -54,10 +46,16 @@ public class AimingLine : MonoBehaviour
         m_lineRenderer.enabled = true;
     }
 
-    private void EnableAimLine(GameObject _projectile)
+    private void ToggleAimLine(GameObject _projectile)
     {
-        Debug.Log("Aim line enabled");
-        m_lineRenderer.enabled = true;
+        if (_projectile == null)
+        {
+            DisableAimLine();
+        }
+        else
+        {
+            EnableAimLine();
+        }
     }
 
     private void Awake()
