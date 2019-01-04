@@ -67,6 +67,7 @@ public class EffectsManager : Manager
 
     /// <summary>
     /// Provides public access to the Shake coroutine, which actually produces the screen shake effect
+    /// Starts the ShakeScreen coroutine, passing in the provided values
     /// </summary>
     /// <param name="_duration">The duration of the screen shake effect</param>
     /// <param name="_magnitude">The initial magnitude of the shakes</param>
