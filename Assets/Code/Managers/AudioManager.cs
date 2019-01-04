@@ -75,15 +75,16 @@ public class AudioManager : Manager
     private Sound[] m_sounds;
 
     /// <summary>
-    /// Subscribes to sceneLoad event to enable the manager to respond to scene changes
+    /// Subscribes to relevant events
     /// </summary>
     private void OnEnable()
     {
+        /// Subscribes to sceneLoad event to enable the manager to respond to scene changes
         SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
     /// <summary>
-    /// Unsubscribes from sceneLoad when manager is disabled
+    /// Unsubscribes from events when the Manager is disabled
     /// </summary>
     private void OnDisable()
     {
@@ -91,7 +92,7 @@ public class AudioManager : Manager
     }
 
     /// <summary>
-    /// Calls initialisation code for the manager
+    /// Calls initialisation methods for the manager
     /// </summary>
     private void Awake()
     {
@@ -262,7 +263,7 @@ public class AudioManager : Manager
     /// </summary>
     protected override void InitManager()
     {
-        /// Instantiates the instance if has not been
+        /// Instantiates the instance if has not been already
         if (m_instance == null)
         {
             m_instance = this;

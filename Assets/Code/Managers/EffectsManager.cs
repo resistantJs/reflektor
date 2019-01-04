@@ -16,20 +16,22 @@ public class EffectsManager : Manager
     private static EffectsManager m_instance = null;
     /// <summary>
     /// Reference to the current scene's main camera
+    /// Enables effects that utilise the camera, such as screenshake
     /// Initialised inside InitManager
     /// </summary>
     private Camera m_mainCamera = null;
 
     /// <summary>
-    /// Subscribes to sceneLoad event to enable the manager to respond to scene changes
+    /// Subscribes to relevant events
     /// </summary>
     private void OnEnable()
     {
+        /// Subscribes to sceneLoad event to enable the manager to respond to scene changes
         SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
     /// <summary>
-    /// Unsubscribes to sceneLoad when manager is disabled
+    /// Unsubscribes from events when the Manager is disabled
     /// </summary>
     private void OnDisable()
     {
@@ -37,7 +39,7 @@ public class EffectsManager : Manager
     }
 
     /// <summary>
-    /// Calls initialisation code for the manager
+    /// Calls initialisation methods for the manager
     /// </summary>
     private void Awake()
     {
@@ -138,15 +140,18 @@ public class EffectsManager : Manager
     /// </summary>
     protected override void InitManager()
     {
+        /// Instantiates the instance if has not been already
         if (Instance == null)
         {
             Instance = this;
         }
+        /// If an instance already exists, destroys this one
         else if (Instance != this)
         {
             Destroy(gameObject);
         }
 
+        /// Sets this instance to be not be destroyed when a new scene is loaded
         DontDestroyOnLoad(gameObject);
     }
 
@@ -157,6 +162,7 @@ public class EffectsManager : Manager
     protected override void SetReferences()
     {
         Debug.Log("EffectsManager: Setting References");
+        /// Gets a reference to the Main Camera in the scene
         m_mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 

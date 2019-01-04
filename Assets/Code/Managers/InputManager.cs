@@ -1,65 +1,160 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class InputManager : MonoBehaviour
+/// <summary>
+/// Manager responsible for detecting user input
+/// Contains methods for detecting certain types of user input, such as whether specific buttons are pressed or the position of the player's mouse
+/// All managers implement the singleton pattern to prevent the existance of multiple instances of the same manager in the scene
+/// </summary>
+public class InputManager : Manager
 {
+    /// <summary>
+    /// Singleton instance for the manager
+    /// Initialised inside InitManager
+    /// </summary>
     private static InputManager m_instance = null;
+    /// <summary>
+    /// Indicates whether or not the player is pressing the Fire button
+    /// True: the button is being pressed
+    /// False: the button is not being pressed
+    /// </summary>
     private bool m_fire = false;
+    /// <summary>
+    /// Indicates whether or not the player is pressing the Quit button
+    /// True: the button is being pressed
+    /// False: the button is not being pressed
+    /// </summary>
     private bool m_quit = false;
+    /// <summary>
+    /// Indicates whether or not the player is pressing the Destroy Projectile button
+    /// True: the button is being pressed
+    /// False: the button is not being pressed
+    /// </summary>
     private bool m_destroyProjectile = false;
+    /// <summary>
+    /// Stores the mouse pointer's current position
+    /// </summary>
     private Vector3 m_mousePos = Vector3.zero;
 
-    private void Awake()
+    /// <summary>
+    /// Subscribes to relevant events
+    /// </summary>
+    private void OnEnable()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
+        /// Subscribes to sceneLoad event to enable the manager to respond to scene changes
+        SceneManager.sceneLoaded += NewLevelLoaded;
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Unsubscribes from events when the Manager is disabled
+    /// </summary>
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= NewLevelLoaded;
+    }
+
+    /// <summary>
+    /// Calls initialisation methods for the manager
+    /// </summary>
+    private void Awake()
+    {
+        InitManager();
+        SetReferences();
+    }
+
+    /// <summary>
+    /// Calls SetInputs to respond to the player's input
+    /// </summary>
     private void Update()
     {
         SetInputs();
     }
 
+    /// <summary>
+    /// Queries the Unity's input system to check if the players is making certain inputs and sets the input variables accordingly
+    /// Called in Update loop to ensure responsive input
+    /// </summary>
     private void SetInputs()
     {
+        /// Gets the position of the player's mouse point
         m_mousePos = Input.mousePosition;
 
+        /// Sets the value of m_fire depending on if the Fire1 button is held down or not
         if (Input.GetButtonDown("Fire1"))
         {
-            Fire = true;
+            m_fire = true;
         }
         else
         {
-            Fire = false;
+            m_fire = false;
         }
 
+        /// Sets the value of m_destroyProjectile depending on if the Fire2 button is held down or not
         if (Input.GetButtonDown("Fire2"))
         {
-            DestroyProjectile = true;
+            m_destroyProjectile = true;
         }
         else
         {
-            DestroyProjectile = false;
+            m_destroyProjectile = false;
         }
 
+        /// Sets the value of m_quit depending on if the Cancel button is held down or not
         if (Input.GetButtonDown("Cancel"))
         {
-            Quit = true;
+            m_quit = true;
         }
         else
         {
-            Quit = false;
+            m_quit = false;
         }
     }
 
+    /// <summary>
+    /// Initialises the singleton instance of the manager and sets it not be destroyed when a new scene is loaded
+    /// Contains other initialisation code for a manager
+    /// </summary>
+    protected override void InitManager()
+    {
+        /// Instantiates the instance if has not been
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        /// If an instance already exists, destroys this one
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        /// Sets this instance to be not be destroyed when a new scene is loaded
+        DontDestroyOnLoad(gameObject);
+    }
+
+    /// <summary>
+    /// Method compatible with SceneManager.sceneLoad event
+    /// Enables managers to respond to a scene being loaded, for example by reacquiring references to objects in the scene
+    /// </summary>
+    /// <param name="_scene">Scene reference</param>
+    /// <param name="_mode">LoadSceneMode reference</param>
+    protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
+    {
+        SetReferences();
+    }
+
+    /// <summary>
+    /// Contains code to get references to objects the manager depends on
+    /// Should be called inside NewLevelLoaded
+    /// </summary>s
+    protected override void SetReferences()
+    {
+        Debug.Log("Input Manager: " + NO_REFERENCES_MESSAGE);
+    }
+
+    /// <summary>
+    /// Property to access the current position of the player's mouse pointer
+    /// </summary>
+    /// <value>Publically gets and privately sets the value of Vector3 m_mousePos</value>
     public Vector3 MousePos
     {
         get
@@ -73,6 +168,10 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Property to check whether or not the player is pressing the Fire button
+    /// </summary>
+    /// <value>Publically gets and privately sets value of bool m_fire</value>
     public bool Fire
     {
         get
@@ -80,12 +179,16 @@ public class InputManager : MonoBehaviour
             return m_fire;
         }
 
-        set
+        private set
         {
             m_fire = value;
         }
     }
 
+    /// <summary>
+    /// Property to check whether or not the player is pressing the Quit button
+    /// </summary>
+    /// <value>Publically gets and privately sets the value of bool m_quit</value>
     public bool Quit
     {
         get
@@ -93,25 +196,16 @@ public class InputManager : MonoBehaviour
             return m_quit;
         }
 
-        set
+        private set
         {
             m_quit = value;
         }
     }
 
-    public static InputManager Instance
-    {
-        get
-        {
-            return m_instance;
-        }
-
-        private set
-        {
-            m_instance = value;
-        }
-    }
-
+    /// <summary>
+    /// Property to check whether or not the player is pressing the Destroy Projectile button
+    /// </summary>
+    /// <value>Publically gets and privately sets the value of bool m_destroyProjectile</value>
     public bool DestroyProjectile
     {
         get
@@ -122,6 +216,24 @@ public class InputManager : MonoBehaviour
         private set
         {
             m_destroyProjectile = value;
+        }
+    }
+
+    /// <summary>
+    /// Property to access the manager's singleton instance outside this class
+    /// Can be set privately only
+    /// </summary>
+    /// <value>Publically gets and privately sets the value of the class's singleton instance, m_instance</value>
+    public static InputManager Instance
+    {
+        get
+        {
+            return m_instance;
+        }
+
+        private set
+        {
+            m_instance = value;
         }
     }
 }
