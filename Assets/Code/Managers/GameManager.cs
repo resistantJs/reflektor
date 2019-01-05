@@ -293,22 +293,26 @@ public class GameManager : Manager
     }
 
     /// <summary>
-    /// Upn pressing the quit game button, quits the game if the player is on the Main Menu. Otherwise returns to the Main Menu
+    /// Upon pressing the Quit Game button, quits the game if the player is on the Main Menu. Otherwise returns to the Main Menu
     /// </summary>
     private void Quit()
     {
-        /// Detects if the user has pressed the Quit button
-        if (InputManager.Instance.Quit)
+        /// Does not quit if play is disabled
+        if (m_enablePlay)
         {
-            /// If the player is not on the Main Menu, load the Main Menu
-            if (SceneManager.GetActiveScene().buildIndex != 0)
+            /// Detects if the user has pressed the Quit button
+            if (InputManager.Instance.Quit)
             {
-                SceneManager.LoadScene(0);
-            }
-            /// If the player is on the Main Menu, quit the game
-            else
-            {
-                Application.Quit();
+                /// If the player is not on the Main Menu, load the Main Menu
+                if (SceneManager.GetActiveScene().buildIndex != 0)
+                {
+                    SceneManager.LoadScene(0);
+                }
+                /// If the player is on the Main Menu, quit the game
+                else
+                {
+                    Application.Quit();
+                }
             }
         }
     }
@@ -327,7 +331,7 @@ public class GameManager : Manager
     /// Property to access the manager's singleton instance outside this class
     /// Can be set privately only
     /// </summary>
-    /// <value>Publically gets and privately sets the value of the class's singleton instance, m_instance</value>
+    /// <value>Publicly gets and privately sets the value of the class's singleton instance, m_instance</value>
     public static GameManager Instance
     {
         get
@@ -344,7 +348,7 @@ public class GameManager : Manager
     /// <summary>
     /// Property to check how many projectiles remain in the player's stock
     /// </summary>
-    /// <value>Publically gets and privately sets the value of m_remainProjectiles</value>
+    /// <value>Publicly gets and privately sets the value of m_remainProjectiles</value>
     public int RemainingProjectiles
     {
         get

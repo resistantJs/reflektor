@@ -51,7 +51,7 @@ public class EffectsManager : Manager
     /// Property to access the manager's singleton instance outside this class
     /// Can be set privately only
     /// </summary>
-    /// <value>Publically gets and privately sets the value of the class's singleton instance, m_instance</value>
+    /// <value>Publicly gets and privately sets the value of the class's singleton instance, m_instance</value>
     public static EffectsManager Instance
     {
         get

@@ -222,7 +222,7 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// Property to access the number of bounces this projectile has remaining
     /// </summary>
-    /// <value>Publically gets and privately sets the value of int m_remainingBounces</value>
+    /// <value>Publicly gets and privately sets the value of int m_remainingBounces</value>
     public int RemainingBounces
     {
         get

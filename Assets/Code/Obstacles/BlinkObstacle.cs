@@ -34,7 +34,7 @@ public class BlinkObstacle : MonoBehaviour, IObstacle
     /// <summary>
     /// Property for accessing obstacle's visibility state
     /// </summary>]
-    /// <value>Publically gets and privately sets the value of bool m_invisible</value>
+    /// <value>Publicly gets and privately sets the value of bool m_invisible</value>
     public bool Invisible
     {
         get

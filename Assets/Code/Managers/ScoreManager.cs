@@ -117,7 +117,7 @@ public class ScoreManager : Manager
     /// <summary>
     /// Property to access the player's total score
     /// </summary>
-    /// <value>Publically gets and privately sets the value of int m_totalScore</value>
+    /// <value>Publicly gets and privately sets the value of int m_totalScore</value>
     public int TotalScore
     {
         get
@@ -135,7 +135,7 @@ public class ScoreManager : Manager
     /// Property to access the manager's singleton instance outside this class
     /// Can be set privately only
     /// </summary>
-    /// <value>Publically gets and privately sets the value of the class's singleton instance, m_instance</value>
+    /// <value>Publicly gets and privately sets the value of the class's singleton instance, m_instance</value>
     public static ScoreManager Instance
     {
         get

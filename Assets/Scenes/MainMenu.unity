@@ -1805,7 +1805,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: BLINK OBSTACBLE (DISAPPEARS)
+  m_Text: BLINK OBSTACLE (DISAPPEARS)
 --- !u!222 &606001246
 CanvasRenderer:
   m_ObjectHideFlags: 0

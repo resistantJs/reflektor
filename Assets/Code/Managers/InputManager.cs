@@ -154,7 +154,7 @@ public class InputManager : Manager
     /// <summary>
     /// Property to access the current position of the player's mouse pointer
     /// </summary>
-    /// <value>Publically gets and privately sets the value of Vector3 m_mousePos</value>
+    /// <value>Publicly gets and privately sets the value of Vector3 m_mousePos</value>
     public Vector3 MousePos
     {
         get
@@ -171,7 +171,7 @@ public class InputManager : Manager
     /// <summary>
     /// Property to check whether or not the player is pressing the Fire button
     /// </summary>
-    /// <value>Publically gets and privately sets value of bool m_fire</value>
+    /// <value>Publicly gets and privately sets value of bool m_fire</value>
     public bool Fire
     {
         get
@@ -188,7 +188,7 @@ public class InputManager : Manager
     /// <summary>
     /// Property to check whether or not the player is pressing the Quit button
     /// </summary>
-    /// <value>Publically gets and privately sets the value of bool m_quit</value>
+    /// <value>Publicly gets and privately sets the value of bool m_quit</value>
     public bool Quit
     {
         get
@@ -205,7 +205,7 @@ public class InputManager : Manager
     /// <summary>
     /// Property to check whether or not the player is pressing the Destroy Projectile button
     /// </summary>
-    /// <value>Publically gets and privately sets the value of bool m_destroyProjectile</value>
+    /// <value>Publicly gets and privately sets the value of bool m_destroyProjectile</value>
     public bool DestroyProjectile
     {
         get
@@ -223,7 +223,7 @@ public class InputManager : Manager
     /// Property to access the manager's singleton instance outside this class
     /// Can be set privately only
     /// </summary>
-    /// <value>Publically gets and privately sets the value of the class's singleton instance, m_instance</value>
+    /// <value>Publicly gets and privately sets the value of the class's singleton instance, m_instance</value>
     public static InputManager Instance
     {
         get

@@ -193,7 +193,7 @@ public class LevelManager : Manager
     /// Property to access the manager's singleton instance outside this class
     /// Can be set privately only
     /// </summary>
-    /// <value>Publically gets and privately sets the value of the class's singleton instance, m_instance</value>
+    /// <value>Publicly gets and privately sets the value of the class's singleton instance, m_instance</value>
     public static LevelManager Instance
     {
         get
@@ -210,7 +210,7 @@ public class LevelManager : Manager
     /// <summary>
     /// Property to access the default level load delay value
     /// </summary>
-    /// <value>Publically gets and privately sets the value of float m_nextLevelDelay</value>
+    /// <value>Publicly gets and privately sets the value of float m_nextLevelDelay</value>
     public float NextLevelDelay
     {
         get
@@ -227,7 +227,7 @@ public class LevelManager : Manager
     /// <summary>
     /// Property to access the build index of the previously loaded level
     /// </summary>
-    /// <value>Publically gets and privately sets the value of int m_lastLevelIndex</value>
+    /// <value>Publicly gets and privately sets the value of int m_lastLevelIndex</value>
     public int LastLevelIndex
     {
         get
