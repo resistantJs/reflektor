@@ -63,6 +63,7 @@ public class UIManager : Manager
     /// </summary>
     private void Awake()
     {
+        Debug.Log("UIManager: Awake");
         InitManager();
         SetReferences();
     }
@@ -103,9 +104,20 @@ public class UIManager : Manager
 
             /// Gets references to the elements of the GUI
             m_txtGameStatus = GameObject.Find("txtGameStatus").GetComponent<Text>();
+            if (m_txtGameStatus == null)
+                Debug.Log("m_txtGameStatus ref is null");
+
             m_txtScore = GameObject.Find("txtScore").GetComponent<Text>();
+            if (m_txtScore == null)
+                Debug.Log("m_txtScore ref is null");
+
             m_txtRemainBounces = GameObject.Find("txtRemainBounces").GetComponent<Text>();
+            if (m_txtRemainBounces == null)
+                Debug.Log("m_txtRemainBounces ref is null");
+
             m_txtRemainProjectiles = GameObject.Find("txtRemainProjectiles").GetComponent<Text>();
+            if (m_txtRemainProjectiles == null)
+                Debug.Log("m_txtRemainProjectiles ref is null");
         }
         /// If the current scene is marked as a menu scene, no references are set
         else
@@ -126,7 +138,8 @@ public class UIManager : Manager
     }
 
     /// <summary>
-    /// 
+    /// Identifies whether or not the current scene is marked as a menu
+    /// Certain objects depend on others that are not present in menu scenes, so it is necessary to first check the current scene before attempting to get a reference
     /// </summary>
     /// <returns>
     /// Bool indicated whether or not the current scene is marked as a menu
@@ -190,7 +203,8 @@ public class UIManager : Manager
         /// Does not update element if reference is null
         if (m_txtScore != null)
         {
-            if (_value > 0)
+            /// Passed score value must be negative
+            if (_value >= 0)
             {
                 m_txtScore.text = "SCORE: " + _value;
             }

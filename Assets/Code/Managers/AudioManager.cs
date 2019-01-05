@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 /// All managers implement the singleton pattern to prevent the existance of multiple instances of the same manager in the scene
 /// </summary>
 /// <remarks>
-/// The code in this script is based on a publicly available YouTube tutorial produced by user Brackeys (2017). For the full reference to this source, along with others used for this project, see 'Mechanics Prototype\Documentation\AINT254 - Coursework 01 - Reference List.pdf'
+/// The code in this script is based on a publicly available YouTube tutorial produced by user Brackeys (2017). For the full reference to this source, along with others used for this project, see 'Mechanics Prototype\Documentation\AINT254 – Part 1 Mechanics Prototype - Reference List.pdf'
 /// </remarks>
 public class AudioManager : Manager
 {

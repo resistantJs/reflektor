@@ -94,10 +94,19 @@ public class GameManager : Manager
         /// Resets the player's projectile stock
         m_remainProjectiles = 5;
 
+        Debug.Log("SetUpGame: Setting remaining projectiles GUI");
+        UIManager.Instance.SetTxtRemainProjectiles(m_remainProjectiles);
+
+        Debug.Log("SetUpGame: Setting remaining bounces GUI");
         /// Updates the GUI to display the player's current projectile stock
         UIManager.Instance.SetTxtRemainBounces(0, false);
+
+        Debug.Log("SetUpGame: Clearing game status text");
         /// Clears the game over or level clear message from the screen
         UIManager.Instance.SetTxtGameStatus(0);
+
+        Debug.Log("SetUpGame: Setting total score GUI, with value: " + ScoreManager.Instance.TotalScore);
+        UIManager.Instance.SetTxtScore(ScoreManager.Instance.TotalScore);
     }
 
     /// <summary>
@@ -221,7 +230,7 @@ public class GameManager : Manager
     protected override void SetReferences()
     {
         Debug.Log("GameManager: Setting References");
-        Debug.Log(NO_REFERENCES_MESSAGE);
+        Debug.Log("GameManager: " + NO_REFERENCES_MESSAGE);
     }
 
     /// <summary>
@@ -232,6 +241,7 @@ public class GameManager : Manager
     /// <param name="_mode">LoadSceneMode reference</param>
     protected override void NewLevelLoaded(Scene _scene, LoadSceneMode _mode)
     {
+        Debug.Log("GameManager: NewLevelLoad");
         SetReferences();
         SetUpGame();
     }
@@ -246,28 +256,28 @@ public class GameManager : Manager
         /// Game state is not checked if the current scene is defined as a menu 
         if (!LevelManager.Instance.OnMenu())
         {
-            Debug.Log("CheckGameState: Not on menu");
+            //Debug.Log("CheckGameState: Not on menu");
 
             /// Checks if one of the player's projectiles has hit the Score Target or not
             if (!m_targetHit)
             {
-                Debug.Log("CheckGameState: Target has not been hit");
+                //Debug.Log("CheckGameState: Target has not been hit");
 
                 /// Checks if there is an active projectile
                 if (m_activeProjectile == null)
                 {
-                    Debug.Log("CheckGameState: No active projectile");
+                    //Debug.Log("CheckGameState: No active projectile");
 
                     /// Checks if the player has expended their stock of the projectiles for the level
                     if (m_remainProjectiles <= 0)
                     {
-                        Debug.Log("CheckGameState: No remaining projectiles");
+                        //Debug.Log("CheckGameState: No remaining projectiles");
 
                         /// Checks if the game is already in a game over state
                         /// Prevents the game over state being set multiple times
                         if (!m_gameOver)
                         {
-                            Debug.Log("CheckGameState: Game is not already over");
+                            //Debug.Log("CheckGameState: Game is not already over");
 
                             /// Upon detecting a game over, calls StateGameOver to set game state
                             StateGameOver();
@@ -280,7 +290,7 @@ public class GameManager : Manager
             {
                 if (!m_levelClear)
                 {
-                    Debug.Log("CheckGameState: Target has been hit");
+                    //Debug.Log("CheckGameState: Target has been hit");
                     /// Upon detecting that the player has cleared the level, calls StateGameOver to set game state
                     StateLevelClear();
                 }
@@ -288,7 +298,7 @@ public class GameManager : Manager
         }
         else
         {
-            Debug.Log("CheckGameOver: On a menu");
+            //Debug.Log("CheckGameOver: On a menu");
         }
     }
 
