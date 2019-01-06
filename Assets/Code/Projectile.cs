@@ -90,12 +90,12 @@ public class Projectile : MonoBehaviour
             else
             {
                 Debug.Log("Hit collidable object");
-                
-                /// Decrements the projectile's remaining bounces
-                DecrementBounces();
 
                 /// If the struck object was a instance of IObstacle (the interface for all obstacles), triggers its effect
                 TriggerObstacleEffect(collision);
+
+                /// Decrements the projectile's remaining bounces
+                DecrementBounces();
 
                 /// Updates the GUI to display the projectiles remaining bounces after reduction
                 UIManager.Instance.SetTxtRemainBounces(RemainingBounces, true);

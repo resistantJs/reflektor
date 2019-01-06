@@ -15,6 +15,6 @@ public class DeadObstacle : MonoBehaviour, IObstacle
     {
         Debug.Log("DeadObstacle effect triggered");
         /// Uses the projectile reference to call DestroyProjectileExternal with a delay of 0, causing the projectile that struck the DeadObstacle to be instantly destroyed
-        _projectile.GetComponent<Projectile>().DestroyProjectileExternal(0);
+        _projectile.GetComponent<Projectile>().DestroyProjectileExternal(0f);
     }
 }

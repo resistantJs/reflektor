@@ -79,6 +79,14 @@ public class GameManager : Manager
     }
 
     /// <summary>
+    /// Initialises the game state before play begins
+    /// </summary>
+    private void Start()
+    {
+        SetUpGame();
+    }
+
+    /// <summary>
     /// Initialises the game state
     /// </summary>
     private void SetUpGame()
